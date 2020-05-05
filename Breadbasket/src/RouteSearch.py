@@ -11,12 +11,12 @@ FOOD = ['starch:pasta','starch:bread','grain:rice','fruit:tomatoes']
 
 def GetDistanceByAddr(id1,id2,FB,FP):
 	if str(id1)[0] == str(2):
-		URL = f"https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins={FP.at[id1,'Address']}{FP.at[id1,'City']}{FP.at[id1,'State']}&destinations={FB.at[id2,'Address']}{FB.at[id2,'City']}{FB.at[id2,'State']}&key=AIzaSyBR4VBHFKox9cvzeCdR2gojPGcGD6ij5vE"
+		URL = f"https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins={FP.at[id1,'Address']}{FP.at[id1,'City']}{FP.at[id1,'State']}&destinations={FB.at[id2,'Address']}{FB.at[id2,'City']}{FB.at[id2,'State']}&key=*YOURKEYHERE*"
 		resp = requests.get(URL).json()
 		return resp['rows'][0]['elements'][0]['distance']['value']
 	else:
 		### Google Maps API
-		URL = f"https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins={FB.at[id1,'Address']}{FB.at[id1,'City']}{FB.at[id1,'State']}&destinations={FB.at[id2,'Address']}{FB.at[id2,'City']}{FB.at[id2,'State']}&key=AIzaSyBR4VBHFKox9cvzeCdR2gojPGcGD6ij5vE"
+		URL = f"https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins={FB.at[id1,'Address']}{FB.at[id1,'City']}{FB.at[id1,'State']}&destinations={FB.at[id2,'Address']}{FB.at[id2,'City']}{FB.at[id2,'State']}&key=*YOURKEYHERE*"
 		resp = requests.get(URL).json()
 		return resp['rows'][0]['elements'][0]['distance']['value']
 
