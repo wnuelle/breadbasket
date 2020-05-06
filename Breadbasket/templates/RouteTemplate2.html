@@ -16,19 +16,42 @@ Second DIV
 <script>
 // Initialize and add the map
 function initMap() {
+  var directionsService = new google.maps.DirectionsService();
+  var directionsRenderer = new google.maps.DirectionsRenderer();
 // The location of Uluru
-var uluru = {lat: -25.344, lng: 131.036};
-var uluru2 = {lat: -25.348, lng: 131.40};
+  var start = new google.maps.LatLng(37.7699298, -122.4469157);
+  var finish = new google.maps.LatLng(37.7683909618184, -122.51089453697205);
 // The map, centered at Uluru
-var map = new google.maps.Map(
-  document.getElementById('map'), {zoom: 4, center: uluru});
+  var map = new google.maps.Map(
+  document.getElementById('map'), {zoom: 4, center: start});
+
+  directionsRenderer.setMap(map);
+
+  calculateAndDisplayRoute(directionsService, directionsRenderer, start, finish);
 // The marker, positioned at Uluru
-var marker1 = new google.maps.Marker({position: uluru, map: map});
-var marker2 = new google.maps.Marker({position: uluru2, map: map});
+  //var marker1 = new google.maps.Marker({position: start, map: map});
+  //var marker2 = new google.maps.Marker({position: finish, map: map});
 }
+
+function calculateAndDisplayRoute(directionsService, directionsRenderer, start, finish) {
+        directionsService.route(
+            {
+              origin: start,
+              destination: finish,
+              travelMode: 'DRIVING'
+            },
+            function(response, status) {
+              if (status === 'OK') {
+                directionsRenderer.setDirections(response);
+              } else {
+                window.alert('Directions request failed due to ' + status);
+              }
+            });
+      }
 </script>
 <script async defer
 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD9Cfp8qI9Y4CPy_CfZv1pbZNtjwbSsIwc&callback=initMap">
 </script>
+
 </body>
 </html>
