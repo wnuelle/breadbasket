@@ -1,0 +1,66 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Breadbasket</title>
+  <meta name="description" content="The HTML5 Herald">
+  <meta name="author" content="SitePoint">
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"">
+
+</head>
+
+<body>
+	<div class="row">
+		<div class="column">
+			<div id="submission">
+				<h2>Information</h2>
+				<form method="POST" style="width:50%" action="{{ url_for('fb_form')}}">
+					<h3>Primary Contact</h3>
+					{{form.hidden_tag()}}
+					{{form.first_name(class="form")}}
+					{{form.last_name(class="form")}}
+					{{form.email(class="form")}}
+					{{form.phone_number(class="form")}}
+					<p><br></p>
+					<h3>Location</h3>
+					{{form.fbname(class="form")}}
+					{{form.address(class="form")}}
+					{{form.city(class="form")}}
+					{{form.state(class="form")}}
+					{{form.zc(class="form")}}
+					<p><br></p>
+					<h3>Targeted questions</h3>
+					<p>By how many times do exceed normal capacity (2x indicates double normal capacity)?</p>
+					{{form.q1(class="form")}}
+					<p>Estimate the total number of individuals per week. </p>
+					{{form.q2(class="form")}}
+
+					<table>
+					  <tbody><tr>
+					    <th>Name</th>
+					    <th>Id</th>
+					    <th>Inbox Share</th>
+					  </tr>
+					  <tr>
+					    <td>Ben</td><td>55555</td><td><input type="text" name="share_55555" value="0"></td></tr>  <tr>
+					    <td>Steve</td><td>66666</td><td><input type="text" name="share_66666" value="1"></td></tr> <tr>
+					    <td>Harry</td><td>77777</td><td><input type="text" name="share_77777" value="1"></td></tr>  <tr>
+					    <td>Sally</td><td>88888</td><td><input type="text" name="share_88888" value="1"></td></tr></tbody>
+					</table>
+					
+				</form> 
+				<input type="submit" value="Submit">
+				<a href="something" class="button1" type="submit" value="Submit">Submit</a>
+			</div>
+		</div>
+		<div class="column">
+			<img src="static/img/demand2.jpeg" alt="Food bank lines in San Antonio, Texas" style="width:100%">
+			<img src="static/img/supply.jpeg" alt="Potatoes in Picabo, Idaho" style="width:100%">
+		</div>
+	</div>
+	<script></script>
+</body>
+</html>
