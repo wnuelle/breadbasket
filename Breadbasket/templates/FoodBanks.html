@@ -1,0 +1,71 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Breadbasket</title>
+  <meta name="description" content="The HTML5 Herald">
+  <meta name="author" content="SitePoint">
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"">
+
+</head>
+
+<body>
+	<div class="row">
+		<div class="column">
+			<div id="submission">
+				<h2>Information</h2>
+				<h3>Primary Contact</h3>
+				<form method="POST" style="width:50%" action="{{ url_for('fb_form')}}">
+					{{form.hidden_tag()}}
+					{{form.first_name(class="form")}}
+					{{form.last_name(class="form")}}
+				</form> 
+				<form method="POST" style="width:50%" action="{{ url_for('fb_form')}}">
+					{{form.email(class="form")}}
+				</form> 
+				<form method="POST" style="width:50%" action="{{ url_for('fb_form')}}">
+					{{form.phone_number(class="form")}}
+				</form> 
+				<p><br></p>
+				<h3>Location</h3>
+				<form method="POST" style="width:50%" action="{{ url_for('fb_form')}}">
+					{{form.fbname(class="form")}}
+				</form> 
+				<form method="POST" style="width:50%" action="{{ url_for('fb_form')}}">
+					{{form.address(class="form")}}
+				</form> 
+				<form method="POST" style="width:50%" action="{{ url_for('fb_form')}}">
+					{{form.city(class="form")}}
+				</form> 
+				<form method="POST" style="width:50%" action="{{ url_for('fb_form')}}">
+					{{form.state(class="form")}}
+				</form> 
+				<form method="POST" style="width:50%" action="{{ url_for('fb_form')}}">
+					{{form.ZC(class="form")}}
+				</form> 
+				<p><br></p>
+				<h3>Targeted questions</h3>
+				<p>By how many times do exceed normal capacity (2x indicates double normal capacity)?</p>
+				<form method="POST" style="width:50%" action="{{ url_for('fb_form')}}">
+					{{form.q1(class="form")}}
+				</form> 
+				<p>Estimate the total number of individuals per week. </p>
+				<form method="POST" style="width:50%" action="{{ url_for('fb_form')}}">
+					{{form.q2(class="form")}}
+				</form> 
+				<p><br></p>
+				<h3>Specific Needs</h3>
+				<a href="something" class="button1">Submit</a> <input type="submit" value="Submit">
+			</div>
+		</div>
+		<div class="column">
+			<img src="static/img/demand2.jpeg" alt="Food bank lines in San Antonio, Texas" style="width:100%">
+			<img src="static/img/supply.jpeg" alt="Potatoes in Picabo, Idaho" style="width:100%">
+		</div>
+	</div>
+	<script></script>
+</body>
+</html>
