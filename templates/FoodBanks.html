@@ -17,43 +17,53 @@
 		<div class="column">
 			<div id="submission">
 				<h2>Information</h2>
-				<form method="POST" style="width:50%" action="{{ url_for('fb_form')}}">
-					<h3>Primary Contact</h3>
-					{{form.hidden_tag()}}
-					{{form.first_name(class="form")}}
-					{{form.last_name(class="form")}}
-					{{form.email(class="form")}}
-					{{form.phone_number(class="form")}}
-					<p><br></p>
-					<h3>Location</h3>
-					{{form.fbname(class="form")}}
-					{{form.address(class="form")}}
-					{{form.city(class="form")}}
-					{{form.state(class="form")}}
-					{{form.zc(class="form")}}
-					<p><br></p>
+				<p>Please provide your contact information. We will attempt to construct a route that delivers your desired 
+				<br>items. Note that we are allocating food to many in need across the country, and overspecifying need means
+				<br>that others will not have access to those items. Please be realistic with your stated demand.
+				</p>
+				<form method="POST" style="width:100%" action="{{ url_for('fb_form')}}">
+					<div class = "row">
+						<div class = "column">
+							<h3>Primary Contact</h3>
+							{{form.hidden_tag()}}
+							{{form.first_name(class="form")}}
+							{{form.last_name(class="form")}}
+							{{form.email(class="form")}}
+							{{form.phone_number(class="form")}}
+						</div>
+						<div class = "column">
+							<h3>Location</h3>
+							{{form.fbname(class="form")}}
+							{{form.address(class="form")}}
+							{{form.city(class="form")}}
+							{{form.state(class="form")}}
+							{{form.zc(class="form")}}
+						</div>
+					</div>
 					<h3>Targeted questions</h3>
 					<p>By how many times do exceed normal capacity (2x indicates double normal capacity)?</p>
 					{{form.q1(class="form")}}
 					<p>Estimate the total number of individuals per week. </p>
 					{{form.q2(class="form")}}
-
-					<table>
+					<p><br></p>
+					<table id="extra-table">
 					  <tbody><tr>
-					    <th>Name</th>
-					    <th>Id</th>
-					    <th>Inbox Share</th>
-					  </tr>
-					  <tr>
-					    <td>Ben</td><td>55555</td><td><input type="text" name="share_55555" value="0"></td></tr>  <tr>
-					    <td>Steve</td><td>66666</td><td><input type="text" name="share_66666" value="1"></td></tr> <tr>
-					    <td>Harry</td><td>77777</td><td><input type="text" name="share_77777" value="1"></td></tr>  <tr>
-					    <td>Sally</td><td>88888</td><td><input type="text" name="share_88888" value="1"></td></tr></tbody>
+						<th class="col-md-4">Food item</th>
+						<th class="col-md-4">Desired quantity</th>
+						<th class="col-md-4">Inbox Share</th>
+						</tr>
+						<tr>
+						<td>{{form.q2(class="form")}}</td><td>{{form.q2(class="form")}}</td><td>{{form.q2(class="form")}}</td></tr>  <tr>
+						<td>{{form.q2(class="form")}}</td><td>{{form.q2(class="form")}}</td><td>{{form.q2(class="form")}}</td></tr> <tr>
+						<td>{{form.q2(class="form")}}</td><td>{{form.q2(class="form")}}</td><td>{{form.q2(class="form")}}</td></tr>  <tr>
+						<td>{{form.q2(class="form")}}</td><td>{{form.q2(class="form")}}</td><td>{{form.q2(class="form")}}</td></tr></tbody>
+						<button type="button" class="btn btn-info" onclick="addExtraRow()">
+						+ <i class="fas fa-plus"></i>
+						</button>
 					</table>
-					
+					<p><br></p>
+					<input type="submit" value="Submit">
 				</form> 
-				<input type="submit" value="Submit">
-				<a href="something" class="button1" type="submit" value="Submit">Submit</a>
 			</div>
 		</div>
 		<div class="column">
@@ -61,6 +71,24 @@
 			<img src="static/img/supply.jpeg" alt="Potatoes in Picabo, Idaho" style="width:100%">
 		</div>
 	</div>
-	<script></script>
+	<script>
+		function addExtraRow() {
+			let table = document.getElementById("extra-table");
+			let row = table.insertRow(-1);
+			row.contentEditable = "true";
+			row.insertCell(0);
+			row.insertCell(1);
+			row.insertCell(2);
+			let cell3 = row.insertCell(3);
+			cell3.innerHTML = "<button type=\"button\" class=\"btn btn-danger\" onclick=\"removeExtraRow(this)\"> - <i class=\"fas fa-minus\"></i> </button>";
+		}
+
+		// Function to remove a row from the extra properties table
+		function removeExtraRow(x) {
+			let i = x.parentNode.parentNode["rowIndex"];
+			let table = document.getElementById("extra-table");
+			table.deleteRow(i);
+		}
+	</script>
 </body>
 </html>

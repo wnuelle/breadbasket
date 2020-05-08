@@ -48,6 +48,10 @@ class Bank(db.Model):
 	q1 = db.Column(db.String)
 	q2 = db.Column(db.String)
 
+class Route(db.Model):
+	id = db.Column(db.String,primary_key=True)
+	first_name = db.Column(db.String)
+
 @app.route('/',methods=['GET','POST'])
 def index():
 	return render_template('Breadbasket.html')
