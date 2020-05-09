@@ -4,7 +4,7 @@ import requests
 
 
 def LatLong(addr,city,state):
-	URL = f'https://maps.googleapis.com/maps/api/geocode/json?address={addr}+{city}+{state}&key=*YOURKEYHERE*'
+	URL = f'https://maps.googleapis.com/maps/api/geocode/json?address={addr}+{city}+{state}&key=AIzaSyBR4VBHFKox9cvzeCdR2gojPGcGD6ij5vE'
 	resp = requests.get(URL).json()
 	return resp['results'][0]['geometry']['location']
 

@@ -1,0 +1,135 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Breadbasket</title>
+  <meta name="description" content="The HTML5 Herald">
+  <meta name="author" content="SitePoint">
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"">
+
+</head>
+
+<body>
+	<div class="row">
+		<div class="column">
+			<div id="submission">
+				<h2>Information</h2>
+				<p>Please provide your contact information. We will attempt to construct a route that delivers your desired 
+				<br>items. Note that we are allocating food to many in need across the country, and overspecifying need means
+				<br>that others will not have access to those items. Please be realistic with your stated demand.
+				</p>
+				<form method=POST style="width:50%" action="{{ url_for('fb_form')}}">
+					<div class = "row">
+						<div class = "column">
+							<h3>Primary Contact</h3>
+							<input type="text" class="form-control" name="first_name" placeholder='First name'> 
+							<input type="text" class="form-control" name="last_name" placeholder='Last name'> 
+							<input type="text" class="form-control" name="email" placeholder='E-mail'> 
+							<input type="text" class="form-control" name="phone_number" placeholder='Phone number'>
+						</div>
+						<div class = "column">
+							<h3>Location</h3>
+							<input type="text" class="form-control" name="fp_name" placeholder='Food bank name'> 
+							<input type="text" class="form-control" name="address" placeholder='Food bank address'> 
+							<input type="text" class="form-control" name="city" placeholder='City'> 
+							<input type="text" class="form-control" name="state" placeholder='State'> 
+							<input type="text" class="form-control" name="zc" placeholder='Zip code'> 
+						</div>
+					</div>
+					<h3>Targeted questions</h3>
+					<p>By how many times do exceed normal capacity (2x indicates double normal capacity)?</p>
+					<input type="text" class="form-control" name="q1" placeholder='Capacity'> 
+					<p>Estimate the total number of individuals per week. </p>
+					<input type="text" class="form-control" name="q2" placeholder='Estimate individual demand'> 
+					<br>
+					<br>
+					<table id="extra-table">
+					 	<tbody>
+					  	<tr>
+						<th class="col-md-4">Food type</th>
+						<th class="col-md-4">Food item</th>
+						<th class="col-md-4">Desired quantity</th>
+						</tr>
+						<tr>
+							<td>
+								<input type="text" class="form-control" name="food_type1" placeholder='starch'> 
+							</td>
+							<td>
+								<input type="text" class="form-control" name="food_item1" placeholder='pasta'> 
+							</td>
+							<td>
+								<input type="text" class="form-control" name="quantity1" placeholder='quantity'> 
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<input type="text" class="form-control" name="food_type2" placeholder='starch'> 
+							</td>
+							<td>
+								<input type="text" class="form-control" name="food_item2" placeholder='bread'> 
+							</td>
+							<td>
+								<input type="text" class="form-control" name="quantity2" placeholder='quantity'> 
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<input type="text" class="form-control" name="food_type3" placeholder='grain'> 
+							</td>
+							<td>
+								<input type="text" class="form-control" name="food_item3" placeholder='rice'> 
+							</td>
+							<td>
+								<input type="text" class="form-control" name="quantity3" placeholder='quantity'> 
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<input type="text" class="form-control" name="food_type4" placeholder='fruit'> 
+							</td>
+							<td>
+								<input type="text" class="form-control" name="food_item4" placeholder='tomatoes'> 
+							</td>
+							<td>
+								<input type="text" class="form-control" name="quantity4" placeholder='quantity'> 
+							</td>
+						</tr>
+						</tbody>
+						<button type="button" class="btn btn-info" onclick="addExtraRow()">
+						+ <i class="fas fa-plus"></i>
+						</button>
+					</table>
+					<br>
+					<button class="button1" type="submit" value="Submit">Submit</button>
+				</form>  
+			</div>
+		</div>
+		<div class="column">
+			<img src="static/img/demand2.jpeg" alt="Food bank lines in San Antonio, Texas" style="width:100%">
+			<img src="static/img/supply.jpeg" alt="Potatoes in Picabo, Idaho" style="width:100%">
+		</div>
+	</div>
+	<script>
+		function addExtraRow() {
+			let table = document.getElementById("extra-table");
+			let row = table.insertRow(-1);
+			row.contentEditable = "true";
+			row.insertCell(0);
+			row.insertCell(1);
+			row.insertCell(2);
+			let cell3 = row.insertCell(3);
+			cell3.innerHTML = "<button type=\"button\" class=\"btn btn-danger\" onclick=\"removeExtraRow(this)\"> - <i class=\"fas fa-minus\"></i> </button>";
+		}
+
+		// Function to remove a row from the extra properties table
+		function removeExtraRow(x) {
+			let i = x.parentNode.parentNode["rowIndex"];
+			let table = document.getElementById("extra-table");
+			table.deleteRow(i);
+		}
+	</script>
+</body>
+</html>
