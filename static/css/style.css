@@ -5,6 +5,11 @@
   --button-font-size: 16px;
 }
 
+.form-control {
+  width:calc(var(--grid-size)*50);
+  height:calc(var(--grid-size)*5);
+}
+
 #submission {
   padding-left: calc(var(--grid-size)*20);
 }
@@ -24,7 +29,6 @@
 
 #abouttext {
   font-family:var(--body-font);
-  color:#FFFFFF;
 }
 
 p.justify {
@@ -76,6 +80,24 @@ a.button1 {
   transition: all 0.2s;
 }
 a.button1:hover {
+  color:white;
+  background-color: #076bab;
+}
+button.button1 {
+  padding: calc(var(--grid-size) * 1.5);
+  border: calc(var(--grid-size) / 2) solid black;
+  margin: 0 calc(var(--grid-size) / 2);
+  border-radius: calc(var(--grid-size));
+  width: calc(var(--grid-size) * 100);
+  text-decoration:none;
+  font-size: var(--button-font-size);
+  font-family:var(--button-font);
+  font-weight:300;
+  color: black;
+  text-align:center;
+  transition: all 0.2s;
+}
+button.button1:hover {
   color:white;
   background-color: #076bab;
 }

@@ -21,49 +21,90 @@
 				<br>items. Note that we are allocating food to many in need across the country, and overspecifying need means
 				<br>that others will not have access to those items. Please be realistic with your stated demand.
 				</p>
-				<form method="POST" style="width:100%" action="{{ url_for('fb_form')}}">
+				<form method=POST style="width:50%" action="{{ url_for('fb_form')}}">
 					<div class = "row">
 						<div class = "column">
 							<h3>Primary Contact</h3>
-							{{form.hidden_tag()}}
-							{{form.first_name(class="form")}}
-							{{form.last_name(class="form")}}
-							{{form.email(class="form")}}
-							{{form.phone_number(class="form")}}
+							<input type="text" class="form-control" name="first_name" placeholder='First name'> 
+							<input type="text" class="form-control" name="last_name" placeholder='Last name'> 
+							<input type="text" class="form-control" name="email" placeholder='E-mail'> 
+							<input type="text" class="form-control" name="phone_number" placeholder='Phone number'>
 						</div>
 						<div class = "column">
 							<h3>Location</h3>
-							{{form.fbname(class="form")}}
-							{{form.address(class="form")}}
-							{{form.city(class="form")}}
-							{{form.state(class="form")}}
-							{{form.zc(class="form")}}
+							<input type="text" class="form-control" name="fp_name" placeholder='Food bank name'> 
+							<input type="text" class="form-control" name="address" placeholder='Food bank address'> 
+							<input type="text" class="form-control" name="city" placeholder='City'> 
+							<input type="text" class="form-control" name="state" placeholder='State'> 
+							<input type="text" class="form-control" name="zc" placeholder='Zip code'> 
 						</div>
 					</div>
 					<h3>Targeted questions</h3>
 					<p>By how many times do exceed normal capacity (2x indicates double normal capacity)?</p>
-					{{form.q1(class="form")}}
+					<input type="text" class="form-control" name="q1" placeholder='Capacity'> 
 					<p>Estimate the total number of individuals per week. </p>
-					{{form.q2(class="form")}}
-					<p><br></p>
+					<input type="text" class="form-control" name="q2" placeholder='Estimate individual demand'> 
+					<br>
+					<br>
 					<table id="extra-table">
-					  <tbody><tr>
+					 	<tbody>
+					  	<tr>
+						<th class="col-md-4">Food type</th>
 						<th class="col-md-4">Food item</th>
 						<th class="col-md-4">Desired quantity</th>
-						<th class="col-md-4">Inbox Share</th>
 						</tr>
 						<tr>
-						<td>{{form.q2(class="form")}}</td><td>{{form.q2(class="form")}}</td><td>{{form.q2(class="form")}}</td></tr>  <tr>
-						<td>{{form.q2(class="form")}}</td><td>{{form.q2(class="form")}}</td><td>{{form.q2(class="form")}}</td></tr> <tr>
-						<td>{{form.q2(class="form")}}</td><td>{{form.q2(class="form")}}</td><td>{{form.q2(class="form")}}</td></tr>  <tr>
-						<td>{{form.q2(class="form")}}</td><td>{{form.q2(class="form")}}</td><td>{{form.q2(class="form")}}</td></tr></tbody>
+							<td>
+								<input type="text" class="form-control" name="food_type1" placeholder='starch'> 
+							</td>
+							<td>
+								<input type="text" class="form-control" name="food_item1" placeholder='pasta'> 
+							</td>
+							<td>
+								<input type="text" class="form-control" name="quantity1" placeholder='quantity'> 
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<input type="text" class="form-control" name="food_type2" placeholder='starch'> 
+							</td>
+							<td>
+								<input type="text" class="form-control" name="food_item2" placeholder='bread'> 
+							</td>
+							<td>
+								<input type="text" class="form-control" name="quantity2" placeholder='quantity'> 
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<input type="text" class="form-control" name="food_type3" placeholder='grain'> 
+							</td>
+							<td>
+								<input type="text" class="form-control" name="food_item3" placeholder='rice'> 
+							</td>
+							<td>
+								<input type="text" class="form-control" name="quantity3" placeholder='quantity'> 
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<input type="text" class="form-control" name="food_type4" placeholder='fruit'> 
+							</td>
+							<td>
+								<input type="text" class="form-control" name="food_item4" placeholder='tomatoes'> 
+							</td>
+							<td>
+								<input type="text" class="form-control" name="quantity4" placeholder='quantity'> 
+							</td>
+						</tr>
+						</tbody>
 						<button type="button" class="btn btn-info" onclick="addExtraRow()">
 						+ <i class="fas fa-plus"></i>
 						</button>
 					</table>
-					<p><br></p>
-					<input type="submit" value="Submit">
-				</form> 
+					<br>
+					<button class="button1" type="submit" value="Submit">Submit</button>
+				</form>  
 			</div>
 		</div>
 		<div class="column">

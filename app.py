@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import sqlite3 as sql
+import pandas as pd
 import os
 from random import randint
 
@@ -9,17 +10,17 @@ from flask import request, jsonify, render_template
 from flask_wtf import FlaskForm
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
+from flask_pymongo import PyMongo
 from wtforms import StringField, PasswordField
 from wtforms.validators import InputRequired
 
 #initialize flask app
 app = flask.Flask(__name__)
-
 app.config["DEBUG"] = True
 app.config['SECRET_KEY'] = os.urandom(32)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
-Bootstrap(app)
-db = SQLAlchemy(app)
+app.config["MONGO_URI"] = "mongodb+srv://wnuelle:SquibbyDibby###!!!@cluster0-5suiy.mongodb.net/test?retryWrites=true&w=majority"
+app.config["MONGO_DBNAME"] = "test"
+mongo = PyMongo(app)
 
 class InfoForm(FlaskForm):
 	first_name = StringField('First name',validators=[InputRequired()],render_kw={"placeholder": "First name","style":"font-size:100%;"})
@@ -50,7 +51,9 @@ class Bank(db.Model):
 
 class Route(db.Model):
 	id = db.Column(db.String,primary_key=True)
-	first_name = db.Column(db.String)
+	pick_up = db.Column(db.String)
+	drop_off = db.Column(db.String)
+
 
 @app.route('/',methods=['GET','POST'])
 def index():
@@ -59,51 +62,46 @@ def index():
 @app.route('/fb',methods=['GET','POST'])
 def fb_form():
 
-	form = InfoForm() 
+	form = InfoForm()
+	banks = mongo.db.banks 
 
-	if form.validate_on_submit():
-		id = str(1) + str(randint(10000,99999))
-		entry = Bank(id=id,first_name=form.first_name.data,\
-			last_name=form.last_name.data,\
-			email=form.email.data,\
-			phone_number=form.phone_number.data,\
-			fbname = form.fbname.data,\
-			address = form.address.data,\
-			city = form.city.data,\
-			state = form.state.data,\
-			zc = form.zc.data,\
-			q1 = form.q1.data,\
-			q2 = form.q2.data
-			)
-		db.session.add(entry)
-		db.session.commit()
-		return f'New user email {entry.email}'
-
+	if request.method == "POST":
+		fields = ['first_name','last_name','email','phone_number','fp_name','address','city','state','zc','q1','q2']
+		input_dictionary = {item:request.form[item] for item in fields}
+		c = 1
+		while True:
+			try:
+				input_dictionary[str(request.form[f'food_type{c}'])+':'+request.form[f'food_item{c}']] = float(request.form[f'quantity{c}'])
+			except:
+				break
+			c+=1
+		banks.insert(input_dictionary)
 	return render_template('FoodBanks.html',form=form)
 
 @app.route('/fp',methods=['GET','POST'])
 def fp_form():
 
-	form = InfoForm() 
+	form = InfoForm()
+	suppliers = mongo.db.suppliers
 
-	if form.validate_on_submit():
-		id = str(2) + str(randint(10000,99999))
-		entry = Processor(id=id, first_name=form.first_name.data,\
-			last_name=form.last_name.data,\
-			email=form.email.data,\
-			phone_number=form.phone_number.data,\
-			fbname = form.fbname.data,\
-			address = form.address.data,\
-			city = form.city.data,\
-			state = form.state.data,\
-			zc = form.zc.data,\
-			q1 = form.q1.data,\
-			q2 = form.q2.data
-			)
-		db.session.add(entry)
-		db.session.commit()
-		return f'New user email {entry.email}'
+	if request.method == "POST":
+		fields = ['first_name','last_name','email','phone_number','fp_name','address','city','state','zc','q1','q2']
+		input_dictionary = {item:request.form[item] for item in fields}
+		c = 1
+		while True:
+			try:
+				input_dictionary[str(request.form[f'food_type{c}'])+':'+request.form[f'food_item{c}']] = float(request.form[f'quantity{c}'])
+			except:
+				break
+			c+=1
+		suppliers.insert(input_dictionary)
 
+
+	### print all database 
+	#suppliers = mongo.db.suppliers
+	#df = pd.DataFrame(list(suppliers.find()))
+	#print(df)
+	
 	return render_template('FoodProcessors.html',form=form)
 
 #> python app.py

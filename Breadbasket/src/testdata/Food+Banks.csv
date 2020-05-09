@@ -1,8 +1,0 @@
-,FBID,Food+Bank+Name,Address,City,State,ZIP,Over+Capacity+By,Accepts Produce,starch:pasta,starch:bread,grain:rice,fruit:tomatoes,lat,long
-0,100000,Happy Valley Food Bank,41865 N Mill Creek Rd,Wadsworth,IL,60083,4.0,True,0,0,0,0,42.4708355,-87.9520545
-1,100001,Arnett Farms Relief Center,1306 N Cedar Lake Rd,Round Lake Beach,IL,60073,1.5,True,0,0,0,0,42.3718789,-88.090267
-2,100002,Dinky Doink Food Bank,161 N Seymour Ave,Mundelein,IL,60060,8.0,True,0,0,0,0,42.2652012,-88.0022884
-3,100003,Breakthrough Fresh Market,3334 W Carroll Ave,Chicago,IL,60624,1.8,True,1200,0,0,1000,41.88778,-87.710066
-4,100004,Marillac House Food Pantry,2859 Jackson Blvd,Chicago,IL,60612,2.3,True,0,12000,8071,0,41.877124,-87.698431
-5,100005,Pilsen Food Pantry,1850 S Throop St,Chicago,IL,60608,3.5,True,0,0,10006,1500,41.8564084,-87.6590076
-6,100006,Casa Catalina,4537 S Ashland Ave,Chicago,IL,60609,1.1,True,0,7411,0,4313,41.8111722,-87.6646825
