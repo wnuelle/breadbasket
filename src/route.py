@@ -1,9 +1,10 @@
-from random import randint
+import random
 import pymongo
+import string
 
 class Route:
 	def __init__(self,path=[],distance=0,exhausted=0,item=''):
-		self.routeID = 1
+		self.routeID = 1 #''.join([random.choice(string.ascii_letters + string.digits) for n in xrange(32)])
 		self.path = path
 		self.distance = distance
 		self.exhausted = exhausted
@@ -22,9 +23,8 @@ class Route:
 			else:
 				return {'Supplier name':FP.at[ID,'fp_name'],'Address': str(FP.at[ID,'address']) + ' ' + str(FP.at[ID,'city'] + ' ' + str(FP.at[ID,'state'] + ' ' + str(FP.at[ID,'zc']))),'Type':self.item,'Quantity':FP.at[ID,self.item],'Contact name':str(FP.at[ID,'first_name'])+ ' ' +str(FP.at[ID,'last_name']),'Email':FP.at[ID,'email'],'Phone':FP.at[ID,'phone_number']}
 		
-
 		### NEED TO FIX QUANTITIES SENT TO EACH FOOD BANK (ADJUST to maximum of food supply (see SupplyBreakdown function))
-		meta = {'Item':self.item,'Total quantity':self.exhausted,'Total distance':str(self.distance) + ' miles','Courier selection':self.biddingProcess}
+		meta = {'id':self.routeID,'Item':self.item,'Total quantity':self.exhausted,'Total distance':str(self.distance) + ' miles','Courier selection':self.biddingProcess}
 		path_info = {str(i):get_info(self.path[i],FB,FP) for i in range(len(self.path))}
 		input_dictionary = Merge(meta,path_info)
 
