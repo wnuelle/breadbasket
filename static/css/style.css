@@ -39,7 +39,7 @@ p.justify {
 }
 
 .row {
-  display: flex;*/
+  display: flex;
   flex-direction: row;
   justify-content: space-around;
 }
@@ -65,7 +65,7 @@ div.button-group {
   justify-content: space-around;
 }
 
-a.button1 {
+.button1 {
   padding: calc(var(--grid-size) * 1.5);
   border: calc(var(--grid-size) / 2) solid black;
   margin: 0 calc(var(--grid-size) / 2);
@@ -79,25 +79,8 @@ a.button1 {
   text-align:center;
   transition: all 0.2s;
 }
-a.button1:hover {
-  color:white;
-  background-color: #076bab;
-}
-button.button1 {
-  padding: calc(var(--grid-size) * 1.5);
-  border: calc(var(--grid-size) / 2) solid black;
-  margin: 0 calc(var(--grid-size) / 2);
-  border-radius: calc(var(--grid-size));
-  width: calc(var(--grid-size) * 100);
-  text-decoration:none;
-  font-size: var(--button-font-size);
-  font-family:var(--button-font);
-  font-weight:300;
-  color: black;
-  text-align:center;
-  transition: all 0.2s;
-}
-button.button1:hover {
+.button1:hover {
+  cursor: pointer;
   color:white;
   background-color: #076bab;
 }
@@ -106,6 +89,19 @@ button.button1:hover {
     display:block;
     margin:calc(var(--grid-size) / 2) auto;
   }
+}
+
+.input-field {
+  display: flex;
+  margin-bottom: calc(var(--grid-size) * 2);
+}
+
+.input-field label {
+  width: calc(var(--grid-size)*50);
+}
+
+.input-field input {
+  width: 100%;
 }
 
 /* Dropdown Button */
