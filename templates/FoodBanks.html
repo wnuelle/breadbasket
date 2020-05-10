@@ -17,11 +17,11 @@
 		<span></span>
 		<span></span>
 		<ul id="menu">
-			<a href="/"><li>Home</li></a>
-			<a href=""><li>Food Banks</li></a>
-			<a href="/fp"><li>Food Processors</li></a>
-			<a href="/routes"><li>Couriers</li></a>
-			<a href="/donate"><li>Donate</li></a>
+			<a href="{{ url_for('index') }}"><li>Home</li></a>
+			<a href=""><li class = "selected-link">Food Banks</li></a>
+			<a href="{{ url_for('fp_form') }}"><li>Food Processors</li></a>
+			<a href="{{ url_for('courier_form') }}"><li>Couriers</li></a>
+			<a href="{{ url_for('donate_form') }}"><li>Donate</li></a>
 		</ul>
 	</div>
   </nav>
@@ -33,7 +33,7 @@
 			<div id="submission">
 				<h2>Information</h2>
 				<p>Please provide your contact information. We will attempt to construct a route that delivers your desired 
-				items. Note that we are allocating food to many in need across the country, and overspecifying need means
+				items. Note that we are allocating food to many in need across the country and overspecifying need means
 				that others will not have access to those items. Please be realistic with your stated demand.</p>
 				<form method=POST action="{{ url_for('fb_form')}}">
 					<div class = "form-group">
@@ -146,12 +146,12 @@
 						</button>
 					</table>
 					<br>
-					<button class="button1" type="submit" value="Submit">Submit</button>
+					<button class="button1" id="submit" type="submit" value="Submit">Submit</button>
 				</form>  
 			</div>
 		</div>
 		<div class="column" style="width:39%">
-			<img src="static/img/corn.jpeg" alt="Corn field" style="width:100%">
+			<img src="static/img/corn.jpeg" alt="Corn field" style="width:98%">
 		</div>
 	</div>
 	<script>

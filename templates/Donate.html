@@ -17,11 +17,11 @@
 		<span></span>
 		<span></span>
 		<ul id="menu">
-			<a href="/"><li>Home</li></a>
-			<a href="/fb"><li>Food Banks</li></a>
-			<a href="/fp"><li>Food Processors</li></a>
-			<a href="/routes"><li>Couriers</li></a>
-			<a href=""><li>Donate</li></a>
+			<a href="{{ url_for('index') }}"><li>Home</li></a>
+			<a href="{{ url_for('fb_form') }}"><li>Food Banks</li></a>
+			<a href="{{ url_for('fp_form') }}"><li>Food Processors</li></a>
+			<a href="{{ url_for('courier_form') }}"><li>Couriers</li></a>
+			<a href=""><li class = "selected-link">Donate</li></a>
 		</ul>
 	</div>
   </nav>

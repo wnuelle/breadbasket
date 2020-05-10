@@ -5,6 +5,7 @@
   --button-font: 'Roboto','sans-serif';
   --button-font-size: 16px;
   --grid-size: 4px; 
+  --nav-font-size: 20px;
 }
 
 /* Header/footer styling */
@@ -18,7 +19,7 @@
 #menuToggle
 {
   display: block;
-  position: relative;
+  position: fixed;
   top: calc(var(--grid-size)*5);
   left: calc(var(--grid-size)*5);
   z-index: 1;
@@ -98,10 +99,11 @@
 
 #menu
 {
-  position: absolute;
+  position: fixed;
   margin: calc(var(--grid-size)*-25) 0 0 calc(var(--grid-size)*-12.5);
   padding: calc(var(--grid-size)*27) calc(var(--grid-size)*5) calc(var(--grid-size)*2) calc(var(--grid-size)*12.5);
-  background: #ededed;
+  background: white;
+  border: calc(var(--grid-size) / 4) solid lightgray;
   list-style-type: none;
   -webkit-font-smoothing: antialiased;
   transform-origin: 0% 0%;
@@ -109,10 +111,14 @@
   transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
 }
 
+#menu .selected-link {
+  color: var(--blue);
+}
+
 #menu li
 {
   padding: calc(var(--grid-size)*2) 0;
-  font-size: 20px;
+  font-size: var(--nav-font-size);
 }
 
 #menuToggle input:checked ~ ul
@@ -191,6 +197,10 @@ p.justify {
 
 #submission {
   padding-left: calc(var(--grid-size)*20);
+}
+
+#submit {
+  width: 100%;
 }
 
 /* Specific styling */

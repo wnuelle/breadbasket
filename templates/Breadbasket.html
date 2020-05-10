@@ -17,11 +17,11 @@
 		<span></span>
 		<span></span>
 		<ul id="menu">
-			<a href=""><li>Home</li></a>
-			<a href="/fb"><li>Food Banks</li></a>
-			<a href="/fp"><li>Food Processors</li></a>
-			<a href="/routes"><li>Couriers</li></a>
-			<a href="/donate"><li>Donate</li></a>
+			<a href=""><li class = "selected-link">Home</li></a>
+			<a href="{{ url_for('fb_form') }}"><li>Food Banks</li></a>
+			<a href="{{ url_for('fp_form') }}"><li>Food Processors</li></a>
+			<a href="{{ url_for('courier_form') }}"><li>Couriers</li></a>
+			<a href="{{ url_for('donate_form') }}"><li>Donate</li></a>
 		</ul>
 	</div>
   </nav>
@@ -40,8 +40,8 @@
 		<div class="button-group">
 			<a href="{{ url_for('fb_form') }}" class="button1">Food Banks<br/><i>Signal need</i></a>
 			<a href="{{ url_for('fp_form') }}" class="button1">Food Processors<br/><i>Signal oversupply</i></a>
-			<a href="something" class="button1">Couriers<br><i>Bridge-the-gap</i></a>
-			<a href="something" class="button1">Public <br><i>Donate!</i></a>
+			<a href="{{ url_for('courier_form') }}" class="button1">Couriers<br><i>Bridge-the-gap</i></a>
+			<a href="{{ url_for('donate_form') }}" class="button1">Public <br><i>Donate!</i></a>
 		</div>
 		<p class = "justify"> 
 			Breadbasket is a volunteer initiative that efficiently allocates food to food banks in America.
