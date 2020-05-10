@@ -18,7 +18,7 @@ from wtforms.validators import InputRequired
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
 app.config['SECRET_KEY'] = os.urandom(32)
-app.config["MONGO_URI"] = ""
+app.config["MONGO_URI"] = "mongodb://localhost:27017/myDatabase"
 app.config["MONGO_DBNAME"] = "test"
 mongo = PyMongo(app)
 
@@ -38,6 +38,10 @@ class InfoForm(FlaskForm):
 @app.route('/',methods=['GET','POST'])
 def index():
 	return render_template('Breadbasket.html')
+
+@app.route('/donate',methods=['GET','POST'])
+def donate_form():
+	return render_template('Donate.html')
 
 @app.route('/fb',methods=['GET','POST'])
 def fb_form():
@@ -80,12 +84,12 @@ def fp_form():
 	return render_template('FoodProcessors.html',form=form)
 
 
-@app.route('/route')
+@app.route('/routes')
 def get_route():
 		routes = mongo.db.routes
 		route_obj = routes.find_one({'id':request.args.get('id')})
 		obj = {'RouteID':route_obj['id'],'First pick up':route_obj['0']}
-		return render_template('RouteTemplate2.html',value=obj)
+		return render_template('Routes.html',value=obj)
 
 
 #> python app.py
