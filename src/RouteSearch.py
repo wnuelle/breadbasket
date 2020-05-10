@@ -70,7 +70,7 @@ def Search(client,value,FB,FP,source,item):
 
 def PATHFINDER():
 	
-	client = pymongo.MongoClient("mongodb+srv://wnuelle:SquibbyDibby###!!!@cluster0-5suiy.mongodb.net/test?retryWrites=true&w=majority")
+	client = pymongo.MongoClient()
 
 	print("Suppliers")
 	print("---------")

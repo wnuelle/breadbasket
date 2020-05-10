@@ -18,7 +18,7 @@ from wtforms.validators import InputRequired
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
 app.config['SECRET_KEY'] = os.urandom(32)
-app.config["MONGO_URI"] = "mongodb+srv://wnuelle:SquibbyDibby###!!!@cluster0-5suiy.mongodb.net/test?retryWrites=true&w=majority"
+app.config["MONGO_URI"] = ""
 app.config["MONGO_DBNAME"] = "test"
 mongo = PyMongo(app)
 
@@ -34,26 +34,6 @@ class InfoForm(FlaskForm):
 	zc = StringField('Zip code',validators=[InputRequired()],render_kw={"placeholder": "Zip code","style":"font-size:100%;"})
 	q1 = StringField('Over capacity',validators=[InputRequired()],render_kw={"placeholder": "Q1","style":"font-size:100%;"})
 	q2 = StringField('Population',validators=[InputRequired()],render_kw={"placeholder": "Q2","style":"font-size:100%;"})
-
-class Bank(db.Model):
-	id = db.Column(db.Integer,primary_key=True)
-	first_name = db.Column(db.String)
-	last_name = db.Column(db.String)
-	email = db.Column(db.String)
-	phone_number = db.Column(db.String)
-	fbname = db.Column(db.String)
-	address = db.Column(db.String)
-	city = db.Column(db.String)
-	state = db.Column(db.String)
-	zc = db.Column(db.String)
-	q1 = db.Column(db.String)
-	q2 = db.Column(db.String)
-
-class Route(db.Model):
-	id = db.Column(db.String,primary_key=True)
-	pick_up = db.Column(db.String)
-	drop_off = db.Column(db.String)
-
 
 @app.route('/',methods=['GET','POST'])
 def index():
@@ -76,6 +56,7 @@ def fb_form():
 				break
 			c+=1
 		banks.insert(input_dictionary)
+
 	return render_template('FoodBanks.html',form=form)
 
 @app.route('/fp',methods=['GET','POST'])
@@ -96,13 +77,16 @@ def fp_form():
 			c+=1
 		suppliers.insert(input_dictionary)
 
-
-	### print all database 
-	#suppliers = mongo.db.suppliers
-	#df = pd.DataFrame(list(suppliers.find()))
-	#print(df)
-	
 	return render_template('FoodProcessors.html',form=form)
+
+
+@app.route('/route')
+def get_route():
+		routes = mongo.db.routes
+		route_obj = routes.find_one({'id':request.args.get('id')})
+		obj = {'RouteID':route_obj['id'],'First pick up':route_obj['0']}
+		return render_template('RouteTemplate2.html',value=obj)
+
 
 #> python app.py
 if __name__ == "__main__":
