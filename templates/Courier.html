@@ -1,0 +1,76 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Breadbasket</title>
+  <meta name="description" content="The HTML5 Herald">
+  <meta name="author" content="SitePoint">
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"">
+
+</head>
+
+<body>
+	<div id="tbl">
+		<div>
+		<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for start location..." style="width:13%;">
+		<input type="text" id="myInput" onkeyup="myFunction2()" placeholder="Search for end location..." style="width:13%;">
+		</div>
+		<table id="myTable">
+		<tr class="header">
+			<th style="width:17%;">Start Location</th>
+			<th style="width:17%;">End Location</th>
+			<th style="width:7%;">Distance</th>
+			<th style="width:5%;"># Stops</th>
+			<th style="width:7%;">Food Item</th>
+			<th style="width:10%;">Quantity</th>
+			<th style="width:10%;">Total Weight</th>
+			<th style="width:10%;">Current Fee</th>
+			<th style="width:10%;">Truck Requirements</th>
+			<th style="width:10%;"></th>
+
+		</tr>
+		{% for rte in routes %}
+		<tr>
+			<td>{{ rte['0']['Address'] }}</td>
+			<td>{{ rte[(rte['Route length']-1)|string]['Address'] }}</td>
+			<td>{{ rte['Total distance'] }}</td>
+			<td style="text-align:center;">{{ rte['Route length'] }}</td>
+			<td>{{ rte['Item'].split(":")[1].capitalize() }}</td>
+			<td>{{ rte['Total quantity'] }}</td> <!-- ADD unit!!! -->
+			<td>{{ rte['Total quantity'] }}</td>
+			<td>{{ '$'+rte['Current Fee']|string }}</td>
+			<td>Distance</td>
+			<td style="text-align:center;"><a href="{{ '/route?id=' + rte.id }}">See route</a></td>
+		</tr>
+		{% endfor %}
+		</table>
+	</div>
+	<script>
+		function myFunction() {
+		  // Declare variables
+		  var input, filter, table, tr, td, i, txtValue;
+		  input = document.getElementById("myInput");
+		  filter = input.value.toUpperCase();
+		  table = document.getElementById("myTable");
+		  tr = table.getElementsByTagName("tr");
+
+		  // Loop through all table rows, and hide those who don't match the search query
+		  for (i = 0; i < tr.length; i++) {
+			td = tr[i].getElementsByTagName("td")[0];
+			console.log(td);
+			if (td) {
+			  txtValue = td.textContent || td.innerText;
+			  if (txtValue.toUpperCase().indexOf(filter) > -1) {
+				tr[i].style.display = "";
+			  } else {
+				tr[i].style.display = "none";
+			  }
+			}
+		  }
+		}
+	</script>
+</body>
+</html>

@@ -1,57 +1,129 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>HTML div</title>
+<title>Breadbasket</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"">
+<nav role="navigation">
+	<div id="menuToggle">
+		<input type="checkbox" />
+		<span></span>
+		<span></span>
+		<span></span>
+		<ul id="menu">
+			<a href="{{ url_for('index') }}"><li>Home</li></a>
+			<a href="{{ url_for('fb_form') }}"><li>Food Banks</li></a>
+			<a href=""><li class = "selected-link">Food Processors</li></a>
+			<a href="{{ url_for('courier_form') }}"><li>Couriers</li></a>
+			<a href="{{ url_for('donate_form') }}"><li>Donate</li></a>
+		</ul>
+	</div>
+  </nav>
 </head>
 <body>
-
 	<div class="row">
-		<div class="column" id="map" style="width: 48%; float:right; position:fixed; height:900px; background:gray; margin:1%"> 
+
+		<div class="column" style="width: 48%; float:left; margin:1%"> 
+			<h2 style="margin-left:20px;">Route</h2>
+			<h3 style="margin-left:20px;">Information</h3>
+			<p style ="margin-left:30px;">Date: 5/10/2020 </p>
+			<p style ="margin-left:30px;">Route manager: Shelly</p>
+			<h3 style="margin-left:20px;">Itinerary</h3>
+			<button class="accordion">Pick up: {{route['0']['Supplier name']}}<span style="float:right;"><b>9:30 AM</b></span></button>
+			<div class="panel">
+			  <p style ="margin-left:10px;">Address: {{route['0']['Address']}}</p>
+			</div>
+
+			{% for i in range(route['Route length']|int-1) %}
+			<button class="accordion">Drop off: {{ route[(i+1)|string]['Food bank name'] }}</button>
+			<div class="panel">
+			  <p style ="margin-left:10px;">Address: {{route[(i+1)|string]['Address']}}</p>
+			</div>
+			{% endfor %}
+
 		</div>
-		<div class="column" style="width: 48%; float:left; height:100px; margin:1%"> 
-			<p>
-				This is filler text for para 2 of the webiste.
-				{{value}}
-			</p>
+		<div class="column" id="map" style="width: 48%; float:right; position:fixed; height:900px; background:gray; margin:1%"> 
 		</div>
 	</div>
 <script>
-// Initialize and add the map
-function initMap() {
-	var directionsService = new google.maps.DirectionsService();
-	var directionsRenderer = new google.maps.DirectionsRenderer();
-// The location of Uluru
-	var start = new google.maps.LatLng(37.7699298, -122.4469157);
-	var finish = new google.maps.LatLng(37.7683909618184, -122.51089453697205);
-// The map, centered at Uluru
-	var map = new google.maps.Map(document.getElementById('map'), {zoom: 4, center: start});
 
-	directionsRenderer.setMap(map);
+	var locations = JSON.parse("{{ locations | tojson | safe}}");
+	console.log(locations)
 
-	calculateAndDisplayRoute(directionsService, directionsRenderer, start, finish);
-// The marker, positioned at Uluru
-	//var marker1 = new google.maps.Marker({position: start, map: map});
-	//var marker2 = new google.maps.Marker({position: finish, map: map});
-}
+	// Initialize and add the map
+		function initMap() {
+			var directionsService = new google.maps.DirectionsService();
+			var directionsRenderer = new google.maps.DirectionsRenderer();
+		// The location of Uluru
 
-function calculateAndDisplayRoute(directionsService, directionsRenderer, start, finish) {
-				directionsService.route(
-						{
-							origin: start,
-							destination: finish,
-							travelMode: 'DRIVING'
-						},
-						function(response, status) {
-							if (status === 'OK') {
-								directionsRenderer.setDirections(response);
-							} else {
-								window.alert('Directions request failed due to ' + status);
-							}
-						});
-			}
+		// The map, centered at Uluru
+			var map = new google.maps.Map(document.getElementById('map'),{zoom: 2, center: start});
+
+			directionsRenderer.setMap(map);
+			console.log(locations.length)
+			for (var i = 0; i < locations.length; i++) {
+				var waypoints = []
+				var start;
+				var finish;
+				var waypoint;
+				for (var j = 0; j < locations[i].length; j++) {
+					if (j == 0) {
+						var point = locations[i][j]
+						start = new google.maps.LatLng(point[0],point[1]);
+					} else if (j == (locations[i].length - 1)) {
+						var point = locations[i][j]
+						finish = new google.maps.LatLng(point[0],point[1]);
+					} else {
+						console.log(locations[i][j][0],locations[i][j][1])
+						waypoint = new google.maps.LatLng(locations[i][j][0],locations[i][j][1]);
+						waypoints.push({'location':waypoint,'stopover':true})
+					}
+				}
+				calculateAndDisplayRoute(directionsService, directionsRenderer, start, waypoints, finish);
+		  	}
+
+		}
+
+		function calculateAndDisplayRoute(directionsService, directionsRenderer, start, waypoints, finish) {
+						console.log(start)
+						console.log(finish)
+						console.log(waypoints)
+						directionsService.route(
+								{
+									origin: start,
+									destination: finish,
+									waypoints: waypoints,
+									travelMode: 'DRIVING'
+								},
+								function(response, status) {
+									if (status === 'OK') {
+										directionsRenderer.setDirections(response);
+									} else {
+										window.alert('Directions request failed due to ' + status);
+									}
+								});
+					}
+
+	var acc = document.getElementsByClassName("accordion");
+	var i;
+
+	for (i = 0; i < acc.length; i++) {
+	  acc[i].addEventListener("click", function() {
+	    /* Toggle between adding and removing the "active" class,
+	    to highlight the button that controls the panel */
+	    this.classList.toggle("active");
+
+	    /* Toggle between hiding and showing the active panel */
+	    var panel = this.nextElementSibling;
+	    if (panel.style.display === "block") {
+	      panel.style.display = "none";
+	    } else {
+	      panel.style.display = "block";
+	    }
+	  });
+	}
 </script>
 <script async defer
-src="https://maps.googleapis.com/maps/api/js?key=&callback=initMap">
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD9Cfp8qI9Y4CPy_CfZv1pbZNtjwbSsIwc&callback=initMap">
 </script>
 
 </body>

@@ -9,6 +9,8 @@
   <meta name="author" content="SitePoint">
 
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"">
+  <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/narrow-jumbotron.css') }}" rel="stylesheet">
 
 </head>
 
@@ -18,8 +20,7 @@
 			<div id="submission">
 				<h2>Information</h2>
 				<p>Please provide your contact information. We will attempt to construct a route that delivers your desired 
-				<br>items. Note that we are allocating food to many in need across the country, and overspecifying need means
-				<br>that others will not have access to those items. Please be realistic with your stated demand.
+				<br>items. Note that we are allocating food to many in need across the country, and overspecifying need means that others will not have access to those items. Please be realistic with your stated demand.
 				</p>
 				<form method=POST style="width:50%" action="{{ url_for('fb_form')}}">
 					<div class = "row">
