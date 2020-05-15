@@ -46,16 +46,18 @@
 			</div>
 			{% endfor %}
 
+			<form method=POST action="{{ url_for('get_route')+'?id='+route.id}}" >
 			<div id="bid" class="jumbotron" style="margin:60px;position:absolute;bottom:0px;width:42.5%;">
 				<span>
 				<p style="float:left;font-size:30px;">Couriers: Bid on route</p>
-					<input class="form-control" type="text" style="width:250px;float:right;vertical-align: middle;height:50px;margin-bottom: 5px;text-align:center;" placeholder="Current price:">
+					<input name="bid" class="form-control" type="text" style="width:250px;float:right;vertical-align: middle;height:50px;margin-bottom: 5px;text-align:center;" placeholder="Current best price:  ${{route['Current Fee']}}">
 				</span>
 				<span>
 					<button class="button1" id="submit" type="submit" value="Submit" style="float:right;width:250px;">Submit</button>
 				</span>
 				<p id="demo" style="float:left;font-size:24px;padding-left:40px;"></p>
 			</div>
+			</form>
 		</div>
 		<div class="column" id="map" style="width: 48%; float:right; position:fixed; height:900px; background:gray; margin:1%"> 
 		</div>

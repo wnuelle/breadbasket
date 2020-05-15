@@ -24,7 +24,7 @@ class Route:
 	###  					                ###
 	###########################################
 	def ConstructFields(self):
-		client = pymongo.MongoClient("")
+		client = pymongo.MongoClient("mongodb+srv://wnuelle:QwakkleSmakkle#!#@cluster0-gqwgd.mongodb.net/test?retryWrites=true&w=majority")
 		ID_list = client.test.routes.distinct('id')
 		while True:
 			key = ''.join([random.choice(string.ascii_letters + string.digits) for n in range(32)])
@@ -44,10 +44,12 @@ class Route:
 			return res
 
 		def get_info(ID,FB,FP):
+			print(FB)
+			print(FP)
 			if str(ID)[0] == str(1):
 				return {'Food bank name':FB.at[ID,'fp_name'],'Safe Address':str(FB.at[ID,'city']) + ', ' + str(FB.at[ID,'state']) + ', ' + str(FB.at[ID,'zc']),'Address': str(FB.at[ID,'address']) + ' ' + str(FB.at[ID,'city'] + ' ' + str(FB.at[ID,'state'] + ' ' + str(FB.at[ID,'zc']))),'Type':self.item,'Quantity':FB.at[ID,self.item],'Contact name':str(FB.at[ID,'first_name'])+ ' ' +str(FB.at[ID,'last_name']),'Email':FB.at[ID,'email'],'Phone':FB.at[ID,'phone_number']}
 			else:
-				return {'Supplier name':FP.at[ID,'fp_name'],'Safe Address':str(FB.at[ID,'city']) + ', ' + str(FB.at[ID,'state']) + ', ' + str(FB.at[ID,'zc']),'Address': str(FP.at[ID,'address']) + ' ' + str(FP.at[ID,'city'] + ' ' + str(FP.at[ID,'state'] + ' ' + str(FP.at[ID,'zc']))),'Type':self.item,'Quantity':FP.at[ID,self.item],'Contact name':str(FP.at[ID,'first_name'])+ ' ' +str(FP.at[ID,'last_name']),'Email':FP.at[ID,'email'],'Phone':FP.at[ID,'phone_number']}
+				return {'Supplier name':FP.at[ID,'fp_name'],'Safe Address':str(FP.at[ID,'city']) + ', ' + str(FP.at[ID,'state']) + ', ' + str(FP.at[ID,'zc']),'Address': str(FP.at[ID,'address']) + ' ' + str(FP.at[ID,'city'] + ' ' + str(FP.at[ID,'state'] + ' ' + str(FP.at[ID,'zc']))),'Type':self.item,'Quantity':FP.at[ID,self.item],'Contact name':str(FP.at[ID,'first_name'])+ ' ' +str(FP.at[ID,'last_name']),'Email':FP.at[ID,'email'],'Phone':FP.at[ID,'phone_number']}
 		
 		### (!!!) NEED TO FIX QUANTITIES SENT TO EACH FOOD BANK (ADJUST to maximum of food supply (see SupplyBreakdown function))
 		run = self.ConstructFields()

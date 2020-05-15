@@ -18,7 +18,7 @@ from wtforms.validators import InputRequired
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
 app.config['SECRET_KEY'] = os.urandom(32)
-app.config["MONGO_URI"] = ""
+app.config["MONGO_URI"] = "mongodb+srv://wnuelle:QwakkleSmakkle#!#@cluster0-gqwgd.mongodb.net/test?retryWrites=true&w=majority"
 app.config["MONGO_DBNAME"] = "test"
 mongo = PyMongo(app)
 
@@ -46,7 +46,7 @@ def fb_form():
 	banks = mongo.db.banks 
 
 	if request.method == "POST":
-		fields = ['first_name','last_name','email','phone_number','fp_name','address','city','state','zc','q1','q2']
+		fields = ['first_name','last_name','email','phone_number','fb_name','address','city','state','zc','q1','q2']
 		input_dictionary = {item:request.form[item] for item in fields}
 		c = 1
 		while True:
@@ -79,16 +79,20 @@ def fp_form():
 
 	return render_template('FoodProcessors.html',form=form)
 
-@app.route('/route')
+@app.route('/route',methods=['GET','POST'])
 def get_route():
+		form = InfoForm()
 		routes = mongo.db.routes
 		route = routes.find_one({'id':request.args.get('id')})
 		print(route)
+		if request.method == "POST":
+			routes.update({'id':request.args.get('id')},{"$set":{'Current Fee':request.form['bid']}})
+
 		locations = []
 		for i in range(int(route['Route length'])):
 			locations.append((float(route[str(i)]['Lat']),float(route[str(i)]['Long'])))
 
-		return render_template('RouteTemplate2.html',route=route,locations=[locations])
+		return render_template('RouteTemplate2.html',route=route,locations=[locations],form=form)
 
 
 @app.route('/courier',methods=['GET','POST'])
