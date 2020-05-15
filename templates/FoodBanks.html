@@ -11,7 +11,21 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"">
   <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
   <link href="{{ url_for('static', filename='css/narrow-jumbotron.css') }}" rel="stylesheet">
-
+  <nav role="navigation">
+	<div id="menuToggle">
+		<input type="checkbox" />
+		<span></span>
+		<span></span>
+		<span></span>
+		<ul id="menu">
+			<a href="{{ url_for('index') }}"><li>Home</li></a>
+			<a href="{{ url_for('fb_form') }}"><li>Food Banks</li></a>
+			<a href=""><li class = "selected-link">Food Processors</li></a>
+			<a href="{{ url_for('courier_form') }}"><li>Couriers</li></a>
+			<a href="{{ url_for('donate_form') }}"><li>Public</li></a>
+		</ul>
+	</div>
+  </nav>
 </head>
 
 <body>
@@ -22,30 +36,54 @@
 				<p>Please provide your contact information. We will attempt to construct a route that delivers your desired 
 				<br>items. Note that we are allocating food to many in need across the country, and overspecifying need means that others will not have access to those items. Please be realistic with your stated demand.
 				</p>
-				<form method=POST style="width:50%" action="{{ url_for('fb_form')}}">
-					<div class = "row">
-						<div class = "column">
-							<h3>Primary Contact</h3>
-							<input type="text" class="form-control" name="first_name" placeholder='First name'> 
-							<input type="text" class="form-control" name="last_name" placeholder='Last name'> 
-							<input type="text" class="form-control" name="email" placeholder='E-mail'> 
-							<input type="text" class="form-control" name="phone_number" placeholder='Phone number'>
-						</div>
-						<div class = "column">
-							<h3>Location</h3>
-							<input type="text" class="form-control" name="fp_name" placeholder='Food bank name'> 
-							<input type="text" class="form-control" name="address" placeholder='Food bank address'> 
-							<input type="text" class="form-control" name="city" placeholder='City'> 
-							<input type="text" class="form-control" name="state" placeholder='State'> 
-							<input type="text" class="form-control" name="zc" placeholder='Zip code'> 
-						</div>
+				<form method=POST action="{{ url_for('fb_form')}}">
+					<div class = "form-group">
+						<h5>Location</h5>
+						<span class="input-field">
+							<label for="fb_name">Food processor name</label>
+							<input type="text" class="form-control" name="first_name" id="fb_name"> 
+						</span>
+						<span class="input-field">
+							<label for="address">Address line</label>
+							<input type="text" class="form-control" name="address1" id="address">
+						</span>
+						<span class="input-field">
+							<label for="city">City</label>
+							<input type="text" class="form-control" name="city" id="city">
+						</span>
+						<span class="input-field">
+							<label for="state">State</label>
+							<input type="text" class="form-control" name="state" id="state">
+						</span>
+						<span class="input-field">
+							<label for="zc">Zip code</label>
+							<input type="text" class="form-control" name="zc" id="zc">
+						</span>
 					</div>
-					<h3>Targeted questions</h3>
+					<div class = "form-group">
+						<h5>Primary Contact</h5>
+						<span class="input-field">
+							<label for="first_name">First name</label>
+							<input type="text" class="form-control" name="first_name" id="first_name">
+						</span>
+						<span class="input-field">
+							<label for="last_name">Last name</label>
+							<input type="text" class="form-control" name="last_name" id="last_name">
+						</span>
+						<span class="input-field">
+							<label for="email">Email</label>
+							<input type="text" class="form-control" name="email" id="email">
+						</span>
+						<span class="input-field">
+							<label for="phone_number">Phone number</label>
+							<input type="text" class="form-control" name="phone_number" id="phone_number">
+						</span>
+					</div>
+					<h5>Other Questions</h5>
 					<p>By how many times do exceed normal capacity (2x indicates double normal capacity)?</p>
-					<input type="text" class="form-control" name="q1" placeholder='Capacity'> 
-					<p>Estimate the total number of individuals per week. </p>
+					<input type="text" class="form-control" name="q1" placeholder='e.g. 2x' style="margin-bottom: 5px;"> 
+					<p>Please estimate the total number of individuals per week. </p>
 					<input type="text" class="form-control" name="q2" placeholder='Estimate individual demand'> 
-					<br>
 					<br>
 					<table id="extra-table">
 					 	<tbody>
@@ -102,15 +140,15 @@
 						<button type="button" class="btn btn-info" onclick="addExtraRow()">
 						+ <i class="fas fa-plus"></i>
 						</button>
+						<label style="margin-left:10px;">Add row</label>
 					</table>
 					<br>
-					<button class="button1" type="submit" value="Submit">Submit</button>
+					<button class="button1" id="submit" type="submit" value="Submit">Submit</button>
 				</form>  
 			</div>
 		</div>
-		<div class="column">
-			<img src="static/img/demand2.jpeg" alt="Food bank lines in San Antonio, Texas" style="width:100%">
-			<img src="static/img/supply.jpeg" alt="Potatoes in Picabo, Idaho" style="width:100%">
+		<div class="column" style="width:39%">
+			<img src="static/img/corn.jpeg" alt="Corn field" style="width:98%">
 		</div>
 	</div>
 	<script>

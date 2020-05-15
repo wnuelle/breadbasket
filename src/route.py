@@ -24,7 +24,7 @@ class Route:
 	###  					                ###
 	###########################################
 	def ConstructFields(self):
-		client = pymongo.MongoClient("mongodb+srv://wnuelle:QwakkleSmakkle#!#@cluster0-gqwgd.mongodb.net/test?retryWrites=true&w=majority")
+		client = pymongo.MongoClient("")
 		ID_list = client.test.routes.distinct('id')
 		while True:
 			key = ''.join([random.choice(string.ascii_letters + string.digits) for n in range(32)])

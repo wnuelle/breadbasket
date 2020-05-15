@@ -18,7 +18,7 @@ from wtforms.validators import InputRequired
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
 app.config['SECRET_KEY'] = os.urandom(32)
-app.config["MONGO_URI"] = "mongodb+srv://wnuelle:QwakkleSmakkle#!#@cluster0-gqwgd.mongodb.net/test?retryWrites=true&w=majority"
+app.config["MONGO_URI"] = ""
 app.config["MONGO_DBNAME"] = "test"
 mongo = PyMongo(app)
 

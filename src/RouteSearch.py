@@ -12,12 +12,12 @@ FOOD = ['starch:pasta','starch:bread','grain:rice','fruit:tomatoes']
 
 def GetDistanceByAddr(id1,id2,FB,FP):
 	if str(id1)[0] == str(2):
-		URL = f"https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins={FP.at[id1,'address']}{FP.at[id1,'city']}{FP.at[id1,'state']}&destinations={FB.at[id2,'address']}{FB.at[id2,'city']}{FB.at[id2,'state']}&key=AIzaSyBR4VBHFKox9cvzeCdR2gojPGcGD6ij5vE"
+		URL = f"https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins={FP.at[id1,'address']}{FP.at[id1,'city']}{FP.at[id1,'state']}&destinations={FB.at[id2,'address']}{FB.at[id2,'city']}{FB.at[id2,'state']}&key="
 		resp = requests.get(URL).json()
 		return resp['rows'][0]['elements'][0]['distance']['value']
 	else:
 		### Google Maps API
-		URL = f"https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins={FB.at[id1,'address']}{FB.at[id1,'city']}{FB.at[id1,'state']}&destinations={FB.at[id2,'address']}{FB.at[id2,'city']}{FB.at[id2,'state']}&key=AIzaSyBR4VBHFKox9cvzeCdR2gojPGcGD6ij5vE"
+		URL = f"https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins={FB.at[id1,'address']}{FB.at[id1,'city']}{FB.at[id1,'state']}&destinations={FB.at[id2,'address']}{FB.at[id2,'city']}{FB.at[id2,'state']}&key="
 		resp = requests.get(URL).json()
 		return resp['rows'][0]['elements'][0]['distance']['value']
 
@@ -70,7 +70,7 @@ def Search(client,value,FB,FP,source,item):
 
 def PATHFINDER():
 	
-	client = pymongo.MongoClient("mongodb+srv://wnuelle:QwakkleSmakkle#!#@cluster0-gqwgd.mongodb.net/test?retryWrites=true&w=majority")
+	client = pymongo.MongoClient("")
 
 	print("Suppliers")
 	print("---------")

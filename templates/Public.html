@@ -22,7 +22,7 @@
 			<a href="{{ url_for('fb_form') }}"><li>Food Banks</li></a>
 			<a href=""><li class = "selected-link">Food Processors</li></a>
 			<a href="{{ url_for('courier_form') }}"><li>Couriers</li></a>
-			<a href="{{ url_for('donate_form') }}"><li>Donate</li></a>
+			<a href="{{ url_for('donate_form') }}"><li>Public</li></a>
 		</ul>
 	</div>
   </nav>
@@ -33,58 +33,56 @@
 		<div class="column">
 			 <h2 style = "text-align: center">Volunteer</h2>
 			 <div id="submission">
-				<p>Please provide your contact information. We will attempt to construct a route that delivers your desired 
-				<br>items. Note that we are allocating food to many in need across the country, and overspecifying need means
-				that others will not have access to those items. Please be realistic with your stated demand.
+				<p style="margin-left: 60px; width:85%">Please provide your contact information. We will attempt to construct a route that delivers your desired items. Note that we are allocating food to many in need across the country, and overspecifying need means that others will not have access to those items. Please be realistic with your stated demand.
 				</p>
 				<form method=POST action="{{ url_for('donate_form')}}">
 					<div class = "form-group">
-						<span class="input-field">
+						<span class="input-field" style="margin-left: 60px">
 							<label for="first_name">First name</label>
 							<input type="text" class="form-control" name="first_name" id="first_name">
 						</span>
-						<span class="input-field">
+						<span class="input-field" style="margin-left: 60px">
 							<label for="last_name">Last name</label>
 							<input type="text" class="form-control" name="last_name" id="last_name">
 						</span>
-						<span class="input-field">
+						<span class="input-field" style="margin-left: 60px">
 							<label for="email">E-mail</label>
 							<input type="text" class="form-control" name="email" id="email">
 						</span>
-						<span class="input-field">
+						<span class="input-field" style="margin-left: 60px">
 							<label for="phone_number">Phone number</label>
 							<input type="text" class="form-control" name="phone_number" id="phone_number">
 						</span>
-						<span class="input-field">
+						<span class="input-field" style="margin-left: 60px">
 							<label for="addres">Address</label>
 							<input type="text" class="form-control" name="address" id="address">
 						</span>
-						<span class="input-field">
+						<span class="input-field" style="margin-left: 60px">
 							<label for="city">City</label>
 							<input type="text" class="form-control" name="city" id="city">
 						</span>
-						<span class="input-field">
+						<span class="input-field" style="margin-left: 60px">
 							<label for="state">State</label>
 							<input type="text" class="form-control" name="state" id="state">
 						</span>
-						<span class="input-field">
+						<span class="input-field" style="margin-left: 60px">
 							<label for="zc">Zip code</label>
 							<input type="text" class="form-control" name="zc" id="zc">
 						</span>
-						<span class="input-field">
+						<span class="input-field" style="margin-left: 60px">
 							<label for="route_m">Interest in Route manager?</label>
 							<input type="text" class="form-control" name="route_m" id="route_m" placeholder="True/False">
 						</span>
-						<span class="input-field">
+						<span class="input-field" style="margin-left: 60px">
 							<label for="route_ul">Interest in Route unloader?</label>
 							<input type="text" class="form-control" name="route_ul" id="route_ul" placeholder="True/False">
 						</span>
 					</div>
-					<button class="button1" type="submit" value="Submit">Submit</button>
+					<button class="button1" type="submit" value="Submit" style="margin-left: 60px">Submit</button>
 				</form>  
 				<br>
 				<br> 
-				<div class="jumbotron">
+				<div class="jumbotron" style="width:85%;margin-left: 60px;">
 					<h1 class="display-3">Donate today</h1>
 					<p class="lead">Help food get from point A to point B. For those that need it most.</p>
 					<form action="{{ url_for('pay') }}" method="POST">
@@ -94,7 +92,7 @@
 						data-amount="19900"
 						data-name="Breadbasket"
 						data-description="Food distribution"
-						data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+						data-image="{{ url_for('static', filename='img/108019.png') }}"
 						data-locale="auto">
 					  </script>
 					</form>
