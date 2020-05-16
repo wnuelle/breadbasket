@@ -18,7 +18,7 @@ from wtforms.validators import InputRequired
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
 app.config['SECRET_KEY'] = os.urandom(32)
-app.config["MONGO_URI"] = "mongodb://localhost:27017/myDatabase"
+app.config["MONGO_URI"] = "mongodb+srv://wnuelle:QwakkleSmakkle#!#@cluster0-gqwgd.mongodb.net/test?retryWrites=true&w=majority"
 app.config["MONGO_DBNAME"] = "test"
 mongo = PyMongo(app)
 
@@ -54,7 +54,7 @@ def fb_form():
 	banks = mongo.db.banks 
 
 	if request.method == "POST":
-		fields = ['first_name','last_name','email','phone_number','fp_name','address','city','state','zc','q1','q2']
+		fields = ['first_name','last_name','email','phone_number','fb_name','address','city','state','zc','q1','q2']
 		input_dictionary = {item:request.form[item] for item in fields}
 		c = 1
 		while True:
@@ -87,14 +87,60 @@ def fp_form():
 
 	return render_template('FoodProcessors.html',form=form)
 
-
-@app.route('/routes')
+@app.route('/route',methods=['GET','POST'])
 def get_route():
+		form = InfoForm()
 		routes = mongo.db.routes
-		route_obj = routes.find_one({'id':request.args.get('id')})
-		obj = {'RouteID':route_obj['id'],'First pick up':route_obj['0']}
-		return render_template('Routes.html',value=obj)
+		route = routes.find_one({'id':request.args.get('id')})
+		print(route)
+		if request.method == "POST":
+			routes.update({'id':request.args.get('id')},{"$set":{'Current Fee':request.form['bid']}})
 
+		locations = []
+		for i in range(int(route['Route length'])):
+			locations.append((float(route[str(i)]['Lat']),float(route[str(i)]['Long'])))
+
+		return render_template('RouteTemplate2.html',route=route,locations=[locations],form=form)
+
+
+@app.route('/courier',methods=['GET','POST'])
+def courier_form():
+	routes = mongo.db.routes
+	all_routes = list(routes.find({'Courier selection':'Incomplete'}))
+	locations = []
+	for route in all_routes:
+		stops = []
+		for i in range(int(route['Route length'])):
+			stops.append((float(route[str(i)]['Lat']),float(route[str(i)]['Long'])))
+		locations.append(stops)
+	return render_template('Courier2.html',routes=all_routes,locations=locations)
+
+@app.route('/public',methods=['GET','POST'])
+def donate_form():
+	form = InfoForm()
+	volunteers = mongo.db.volunteers
+
+	if request.method == "POST":
+		fields = ['first_name','last_name','email','phone_number','address','city','state','zc','route_m','route_ul']
+		input_dictionary = {item:request.form[item] for item in fields}
+		print(input_dictionary)
+		volunteers.insert(input_dictionary)
+
+	return render_template('public.html',form=form)
+
+@app.route('/pay', methods=['POST'])
+def pay():
+    
+    customer = stripe.Customer.create(email=request.form['stripeEmail'], source=request.form['stripeToken'])
+
+    charge = stripe.Charge.create(
+        customer=customer.id,
+        amount=19900,
+        currency='usd',
+        description='The Product'
+    )
+
+    return redirect(url_for('thanks'))
 
 #> python app.py
 if __name__ == "__main__":

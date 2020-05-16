@@ -1,0 +1,168 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Breadbasket</title>
+  <meta name="description" content="The HTML5 Herald">
+  <meta name="author" content="SitePoint">
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"">
+  <link href="https://www.w3schools.com/w3css/4/w3.css" rel="stylesheet" />
+  
+	<nav role="navigation">
+		<div id="menuToggle">
+			<input type="checkbox" />
+			<span></span>
+			<span></span>
+			<span></span>
+			<ul id="menu">
+				<a href="{{ url_for('index') }}"><li>Home</li></a>
+				<a href="{{ url_for('fb_form') }}"><li>Food Banks</li></a>
+				<a href="{{ url_for('fp_form') }}"><li>Food Processors</li></a>
+				<a href="{{ url_for('courier_form') }}"><li class = "selected-link">Couriers</li></a>
+				<a href="{{ url_for('donate_form') }}"><li>Donate</li></a>
+			</ul>
+		</div>
+	</nav>
+</head>
+<body>
+	<h3 style="margin-left:20px;margin-top:50px;">Available routes</h3>
+	<div id="map" style="height:650px; background:gray; margin:1%"> 
+	</div>
+	<div id="tbl">
+	<table id="myTable" class="w3-table w3-striped w3-hoverable">
+	  <!--Column Headings-->
+		<thead>
+		<tr class = "header">
+			<td><input id="inputStart" class="w3-input" placeholder="Start Location..." style="background-color: #f1f1f1;"></td>
+			<td><input id="inputEnd" class="w3-input" placeholder="End Location..." style="background-color: #f1f1f1;"></td>
+			<td><input id="inputDistance" class="w3-input" placeholder="Distance..." style="background-color: #f1f1f1;"></td>
+			<td><input id="inputStops" class="w3-input" placeholder="# Stops..." style="background-color: #f1f1f1;"></td>
+			<td><input id="inputItem" class="w3-input" placeholder="Food Item..." style="background-color: #f1f1f1;"></td>
+			<td><input id="inputQuantity" class="w3-input" placeholder="Quantity..." style="background-color: #f1f1f1;"></td>
+			<td><input id="inputWeight" class="w3-input" placeholder="Total Weight..." style="background-color: #f1f1f1;"></td>
+			<td><input id="inputFee" class="w3-input" placeholder="Current Fee..." style="background-color: #f1f1f1;"></td>
+			<td><input id="inputReqs" class="w3-input" placeholder="Truck Requirements..." style="background-color: #f1f1f1;"></td>
+			<td><input id="inputCountry" class="w3-input" style="background-color: #f1f1f1;"></td>
+		</tr>
+		</thead>
+		<!--Row Data-->
+		<tbody>
+		{% for rte in routes %}
+		<tr>
+			<td>{{ rte['0']['Address'] }}</td>
+			<td>{{ rte[(rte['Route length']|int - 1)|string]['Address'] }}</td>
+			<td>{{ rte['Total distance'] }}</td>
+			<td style="text-align:center;">{{ rte['Route length'] }}</td>
+			<td>{{ rte['Item'].split(":")[1].capitalize() }}</td>
+			<td>{{ rte['Total quantity'] }}</td> 
+			<td>{{ rte['Total quantity'] }}</td>
+			<td>{{ '$'+rte['Current Fee']|string }}</td>
+			<td>Distance</td>
+			<td style="text-align:center;"><a href="{{ '/route?id=' + rte.id }}">See route</a></td>
+		</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+	<script type="text/javascript">
+		
+		var locations = JSON.parse("{{ locations | tojson | safe}}");
+		console.log(locations)
+
+		function performReset() {
+			document.getElementById("inputStart").value = "";
+			document.getElementById("inputEnd").value = "";
+			document.getElementById("inputDistance").value = "";
+			document.getElementById("inputStops").value = "";
+			document.getElementById("inputItem").value = "";
+			document.getElementById("inputQuantity").value = "";
+			document.getElementById("inputWeight").value = "";
+			document.getElementById("inputFee").value = "";
+			filterTable(event, 0);
+		}
+
+		function filterTable(event, index) {
+			var filter = event.target.value.toUpperCase();
+			var rows = document.querySelector("#myTable tbody").rows;
+			for (var i = 0; i < rows.length; i++) {
+				var firstCol = rows[i].cells[0].textContent.toUpperCase();
+				console.log(firstCol)
+				var secondCol = rows[i].cells[1].textContent.toUpperCase();
+				var thirdCol = rows[i].cells[2].textContent.toUpperCase();
+				if ((firstCol.indexOf(filter) > -1 && index == 0) || (secondCol.indexOf(filter) > -1 && index == 1) || (thirdCol.indexOf(filter) > -1 && index == 2)) {
+				  rows[i].style.display = "";
+			} else {
+				rows[i].style.display = "none";
+			}      
+		  }
+		}
+
+		document.querySelectorAll('input.w3-input').forEach(function(el,idx){
+			el.addEventListener('keyup', function(e){
+				filterTable(e, idx);
+			}, false);
+		});
+
+
+		// Initialize and add the map
+		function initMap() {
+			var directionsService = new google.maps.DirectionsService();
+			var directionsRenderer = new google.maps.DirectionsRenderer();
+		// The location of Uluru
+
+		// The map, centered at Uluru
+			var map = new google.maps.Map(document.getElementById('map'), {zoom: 2, center: start});
+
+			directionsRenderer.setMap(map);
+
+			for (var i = 0; i < locations.length; i++) {
+				var waypoints = []
+				var start;
+				var finish;
+				var waypoint;
+				for (var j = 0; j < locations[i].length; j++) {
+					if (j == 0) {
+						var point = locations[i][j]
+						console.log(point.toString())
+						start = new google.maps.LatLng(point[0],point[1]);
+					} else if (j== (locations[i].length - 1)) {
+						var point = locations[i][j]
+						console.log(point.toString())
+						finish = new google.maps.LatLng(point[0],point[1]);
+					} else {
+						waypoint = new google.maps.LatLng(locations[i][j][0],locations[i][j][1]);
+						waypoints.push({'location':waypoint,'stopover':true})
+					}
+				}
+				console.log(start)
+				console.log(finish)
+				console.log(waypoints)
+				calculateAndDisplayRoute(directionsService, directionsRenderer, start, waypoints, finish);
+		  	}
+
+		}
+
+		function calculateAndDisplayRoute(directionsService, directionsRenderer, start, waypoints, finish) {
+						directionsService.route(
+								{
+									origin: start,
+									destination: finish,
+									waypoints: waypoints,
+									travelMode: 'DRIVING'
+								},
+								function(response, status) {
+									if (status === 'OK') {
+										directionsRenderer.setDirections(response);
+									} else {
+										window.alert('Directions request failed due to ' + status);
+									}
+								});
+					}
+	</script>
+	<script async defer
+	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD9Cfp8qI9Y4CPy_CfZv1pbZNtjwbSsIwc&callback=initMap">
+	</script>
+</body>
+</html>
