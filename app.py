@@ -39,14 +39,6 @@ class InfoForm(FlaskForm):
 def index():
 	return render_template('Breadbasket.html')
 
-@app.route('/courier',methods=['GET','POST'])
-def courier_form():
-	return render_template('Courier.html')
-
-@app.route('/donate',methods=['GET','POST'])
-def donate_form():
-	return render_template('Donate.html')
-
 @app.route('/fb',methods=['GET','POST'])
 def fb_form():
 

@@ -7,131 +7,10 @@
   --grid-size: 4px; 
   --nav-font-size: 20px;
 }
-/* Header/footer styling */
-#flag {
-  position: absolute;
-  bottom: 0%;
-  left: 0%;
-  padding: 0 0 calc(var(--grid-size)*5) calc(var(--grid-size)*5);
-}
-
-#checkout {
-  background-color: 
-}
-#menuToggle
-{
-  display: block;
-  position: fixed;
-  top: calc(var(--grid-size)*5);
-  left: calc(var(--grid-size)*5);
-  z-index: 1;
-  -webkit-user-select: none;
-  user-select: none;
-}
-
-#menuToggle a
-{
-  text-decoration: none;
-  color: black;
-  transition: color 0.3s ease;
-}
-
-#menuToggle a:hover
-{
-  color: var(--blue);
-}
-
-#menuToggle input
-{
-  display: block;
-  width: calc(var(--grid-size)*10);
-  height: calc(var(--grid-size)*8);
-  position: absolute;
-  top: calc(var(--grid-size)*-2);
-  left: calc(var(--grid-size)*-1);
-  cursor: pointer;
-  opacity: 0;
-  z-index: 2;
-  -webkit-touch-callout: none;
-}
-
-#menuToggle span
-{
-  display: block;
-  width: 33px;
-  height: 4px;
-  margin-bottom: 5px;
-  position: relative;
-  background: black;
-  border-radius: 3px;
-  z-index: 1;
-  transform-origin: 4px 0px;
-  transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
-              background 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
-              opacity 0.55s ease;
-}
-
-#menuToggle span:first-child
-{
-  transform-origin: 0% 0%;
-}
-
-#menuToggle span:nth-last-child(2)
-{
-  transform-origin: 0% 100%;
-}
-
-#menuToggle input:checked ~ span
-{
-  opacity: 1;
-  transform: rotate(45deg) translate(-2px, -1px);
-  background: #232323;
-}
-
-#menuToggle input:checked ~ span:nth-last-child(3)
-{
-  opacity: 0;
-  transform: rotate(0deg) scale(0.2, 0.2);
-}
-
-#menuToggle input:checked ~ span:nth-last-child(2)
-{
-  transform: rotate(-45deg) translate(0, -1px);
-}
-
-#menu
-{
-  position: fixed;
-  margin: calc(var(--grid-size)*-25) 0 0 calc(var(--grid-size)*-12.5);
-  padding: calc(var(--grid-size)*27) calc(var(--grid-size)*5) calc(var(--grid-size)*2) calc(var(--grid-size)*12.5);
-  background: white;
-  border: calc(var(--grid-size) / 4) solid lightgray;
-  list-style-type: none;
-  -webkit-font-smoothing: antialiased;
-  transform-origin: 0% 0%;
-  transform: translate(-100%, 0);
-  transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
-}
-
-#menu .selected-link {
-  color: var(--blue);
-}
-
-#menu li
-{
-  padding: calc(var(--grid-size)*2) 0;
-  font-size: var(--nav-font-size);
-}
-
-#menuToggle input:checked ~ ul
-{
-  transform: none;
-}
-
 
 /* Header/footer styling */
 #flag {
-  position: absolute;
+  position: fixed;
   bottom: 0%;
   left: 0%;
   padding: 0 0 calc(var(--grid-size)*5) calc(var(--grid-size)*5);
@@ -165,22 +44,6 @@
   display: block;
   width: calc(var(--grid-size)*10);
   height: calc(var(--grid-size)*8);
-}
-
-.input-field {
-  display: flex;
-  margin-bottom: calc(var(--grid-size) * 2);
-}
-
-.input-field input {
-  width: 60%;
-}
-
-.input-field label {
-  width: calc(var(--grid-size)*50);
-}
-
-#flag {
   position: absolute;
   top: calc(var(--grid-size)*-2);
   left: calc(var(--grid-size)*-1);
@@ -310,7 +173,8 @@
 }
 
 .input-field input {
-  width: 100%;
+  width: 60%;
+  margin-top: var(--grid-size);
 }
 
 .input-field label {
@@ -360,8 +224,6 @@
   background-color: #f1f1f1;
 }
 
-
-
 .grid-container {
   display: grid;
   grid-template-columns: auto auto;
@@ -373,6 +235,7 @@
   font-size: 30px;
   text-align: center;
 }
+
 /* Style the buttons that are used to open and close the accordion panel */
 .accordion {
   background-color: #eee;
@@ -395,6 +258,7 @@ p.justify {
   line-height: 175%;
   font-size:18px;
 }
+
 /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
 .active, .accordion:hover {
   background-color: #ccc;
@@ -408,6 +272,7 @@ p.justify {
   display: none;
   overflow: hidden;
 }
+
 /* Change color of dropdown links on hover */
 .dropdown-content a:hover {background-color: #ddd;}
 
@@ -429,10 +294,13 @@ p.justify {
 .center {
   margin: auto;
   width: 70%;
-  padding: calc(var(--grid-size)*2);
-  position: absolute;
-  top: 50%;
-  left:15%;
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
+}
+
+.headline {
+  text-align: center;
+}
+
+.headline h1 {
+  font-family: var(--body-font);
+  font-weight: 400;
 }
