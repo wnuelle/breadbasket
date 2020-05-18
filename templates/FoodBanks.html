@@ -88,9 +88,9 @@
 					<table id="extra-table">
 					 	<tbody>
 					  	<tr>
-						<th class="col-md-4">Food type</th>
-						<th class="col-md-4">Food item</th>
-						<th class="col-md-4">Desired quantity</th>
+						<th>Food type</th>
+						<th>Food item</th>
+						<th>Desired quantity</th>
 						</tr>
 						<tr>
 							<td>
@@ -105,42 +105,55 @@
 						</tr>
 						<tr>
 							<td>
-								<input type="text" class="form-control" name="food_type2" placeholder='starch'> 
+								<input type="text" class="form-control" name="food_type2"> 
 							</td>
 							<td>
-								<input type="text" class="form-control" name="food_item2" placeholder='bread'> 
+								<input type="text" class="form-control" name="food_item2"> 
 							</td>
 							<td>
-								<input type="text" class="form-control" name="quantity2" placeholder='quantity'> 
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<input type="text" class="form-control" name="food_type3" placeholder='grain'> 
+								<input type="text" class="form-control" name="quantity2"> 
 							</td>
 							<td>
-								<input type="text" class="form-control" name="food_item3" placeholder='rice'> 
-							</td>
-							<td>
-								<input type="text" class="form-control" name="quantity3" placeholder='quantity'> 
+								<button type="button" class="remove-row-button" onclick="removeExtraRow(this)"> – </button>
 							</td>
 						</tr>
 						<tr>
 							<td>
-								<input type="text" class="form-control" name="food_type4" placeholder='fruit'> 
+								<input type="text" class="form-control" name="food_type3"> 
 							</td>
 							<td>
-								<input type="text" class="form-control" name="food_item4" placeholder='tomatoes'> 
+								<input type="text" class="form-control" name="food_item3"> 
 							</td>
 							<td>
-								<input type="text" class="form-control" name="quantity4" placeholder='quantity'> 
+								<input type="text" class="form-control" name="quantity3"> 
+							</td>
+							<td>
+								<button type="button" class="remove-row-button" onclick="removeExtraRow(this)"> – </button>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<input type="text" class="form-control" name="food_type4"> 
+							</td>
+							<td>
+								<input type="text" class="form-control" name="food_item4"> 
+							</td>
+							<td>
+								<input type="text" class="form-control" name="quantity4"> 
+							</td>
+							<td>
+								<button type="button" class="remove-row-button" onclick="removeExtraRow(this)"> – </button>
+							</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td class="add-row">Add row</td>
+							<td>
+								<button type="button" class="add-row-button" onclick="addExtraRow()"> + </button>
 							</td>
 						</tr>
 						</tbody>
-						<button type="button" class="btn btn-info" onclick="addExtraRow()">
-						+ <i class="fas fa-plus"></i>
-						</button>
-						<label style="margin-left:10px;">Add row</label>
 					</table>
 					<br>
 					<button class="button1" id="submit" type="submit" value="Submit">Submit</button>
@@ -154,13 +167,16 @@
 	<script>
 		function addExtraRow() {
 			let table = document.getElementById("extra-table");
-			let row = table.insertRow(-1);
-			row.contentEditable = "true";
-			row.insertCell(0);
-			row.insertCell(1);
-			row.insertCell(2);
-			let cell3 = row.insertCell(3);
-			cell3.innerHTML = "<button type=\"button\" class=\"btn btn-danger\" onclick=\"removeExtraRow(this)\"> - <i class=\"fas fa-minus\"></i> </button>";
+			let rowIndex = table.rows.length - 1;
+			let newRow = table.insertRow(rowIndex);
+			let newFoodType = newRow.insertCell(0);
+			let newFoodItem = newRow.insertCell(1);
+			let newQuantity = newRow.insertCell(2);
+			let removeButton = newRow.insertCell(3);
+			newFoodType.innerHTML = "<input type=\"text\" class=\"form-control\" name=\"" + "food_type".concat(rowIndex) + "\">";
+			newFoodItem.innerHTML = "<input type=\"text\" class=\"form-control\" name=\"" + "food_item".concat(rowIndex) + "\">";
+			newQuantity.innerHTML = "<input type=\"text\" class=\"form-control\" name=\"" + "quantity".concat(rowIndex) + "\">";
+			removeButton.innerHTML = "<button type=\"button\" class=\"remove-row-button\" onclick=\"removeExtraRow(this)\"> – </button>";
 		}
 
 		// Function to remove a row from the extra properties table

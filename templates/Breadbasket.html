@@ -9,6 +9,21 @@
   <meta name="author" content="SitePoint">
 
   <link rel= "stylesheet" type="text/css" href= "{{ url_for('static', filename='css/style.css') }}">
+  <nav role="navigation">
+	<div id="menuToggle">
+		<input type="checkbox" />
+		<span></span>
+		<span></span>
+		<span></span>
+		<ul id="menu">
+			<a href=""><li class = "selected-link">Home</li></a>
+			<a href="{{ url_for('fb_form') }}"><li>Food Banks</li></a>
+			<a href="{{ url_for('fp_form') }}"><li>Food Processors</li></a>
+			<a href="{{ url_for('courier_form') }}"><li>Couriers</li></a>
+			<a href="{{ url_for('donate_form') }}"><li>Donate</li></a>
+		</ul>
+	</div>
+  </nav>
 </head>
 
 <body>

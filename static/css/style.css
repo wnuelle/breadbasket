@@ -6,6 +6,7 @@
   --button-font-size: 16px;
   --grid-size: 4px; 
   --nav-font-size: 20px;
+  --red: #dc3545;
 }
 
 /* Header/footer styling */
@@ -127,6 +128,22 @@
 }
 
 /* Generic content styling (alphabetized) */
+.add-row {
+  text-align: right;
+  font-weight: bold;
+  padding-right: calc(var(--grid-size) * 2);
+}
+
+.add-row-button {
+  color: white;
+  background-color: var(--blue);
+  border-color: var(--blue);
+  border-radius: var(--grid-size);
+  line-height: 1.0;
+  cursor: pointer;
+  width: calc(var(--grid-size) * 7);
+}
+
 .button1 {
   padding: calc(var(--grid-size) * 1.5);
   border: calc(var(--grid-size) / 2) solid black;
@@ -179,6 +196,16 @@
 
 .input-field label {
   width: calc(var(--grid-size)*50);
+}
+
+.remove-row-button {
+  color: white;
+  background-color: var(--red);
+  border-color: var(--red);
+  border-radius: var(--grid-size);
+  line-height: 1.0;
+  cursor: pointer;
+  width: calc(var(--grid-size) * 7);
 }
 
 .row {
