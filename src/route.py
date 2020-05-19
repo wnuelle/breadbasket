@@ -6,6 +6,7 @@ import datetime
 class Route:
 	def __init__(self,path=[],distance=0,exhausted=0,item=''):
 		self.path = path
+		self.path_time = []
 		self.distance = distance
 		self.exhausted = exhausted
 		self.biddingProcess = "Incomplete"
@@ -24,7 +25,7 @@ class Route:
 	###  					                ###
 	###########################################
 	def ConstructFields(self):
-		client = pymongo.MongoClient("mongodb+srv://wnuelle:QwakkleSmakkle#!#@cluster0-gqwgd.mongodb.net/test?retryWrites=true&w=majority")
+		client = pymongo.MongoClient("mongodb+srv://wnuelle:QwakkleSmakkle#!#@cluster0-gz6r3.mongodb.net/test?retryWrites=true&w=majority")
 		ID_list = client.test.routes.distinct('id')
 		while True:
 			key = ''.join([random.choice(string.ascii_letters + string.digits) for n in range(32)])
@@ -35,7 +36,7 @@ class Route:
 		self.currentFee = 0
 		self.total_weight = 0
 		self.distance = round(self.distance,2)
-		return 'Yo'
+		self.Expiration = datetime.datetime.utcnow() + datetime.timedelta(days=7)
 
 	def ConstructDetails(self,client,FB,FP):
 
@@ -54,14 +55,17 @@ class Route:
 		### (!!!) NEED TO FIX QUANTITIES SENT TO EACH FOOD BANK (ADJUST to maximum of food supply (see SupplyBreakdown function))
 		run = self.ConstructFields()
 
-		meta = {'id':self.routeID,'Item':self.item,'Total quantity':self.exhausted,'Current Fee':self.currentFee,'Route length':self.length,'Total distance':str(self.distance) + ' miles','Courier selection':self.biddingProcess}
+		meta = {'id':self.routeID,'Item':self.item,'Expiration':self.Expiration,'Total quantity':self.exhausted,'Current Fee':self.currentFee,'Route length':self.length,'Total distance':str(self.distance) + ' miles','Courier selection':self.biddingProcess}
 		path_info = {str(i):get_info(self.path[i],FB,FP) for i in range(len(self.path))}
 		input_dictionary = Merge(meta,path_info)
 
 		client.test.routes.insert(input_dictionary)
 
+	def SupplyBreakdown(FB,FP,value):
+		
+		if sum(distributed_food) == self.exhausted:
+			return []
 	#def GetVolunteers():
 
-	#def SupplyBreakdown(FB,FP,value):
 
 

@@ -20,7 +20,7 @@
 		<ul id="menu">
 			<a href="{{ url_for('index') }}"><li>Home</li></a>
 			<a href="{{ url_for('fb_form') }}"><li>Food Banks</li></a>
-			<a href=""><li class = "selected-link">Food Processors</li></a>
+			<a href="{{ url_for('fb_form') }}"><li>Food Processors</li></a>
 			<a href="{{ url_for('courier_form') }}"><li>Couriers</li></a>
 			<a href="{{ url_for('donate_form') }}"><li>Public</li></a>
 		</ul>
@@ -41,49 +41,49 @@
 						<h5>Location</h5>
 						<span class="input-field">
 							<label for="fb_name">Food processor name</label>
-							<input type="text" class="form-control" name="first_name" id="fb_name"> 
+							<input type="text" class="form-control" name="first_name" id="fb_name" required> 
 						</span>
 						<span class="input-field">
 							<label for="address">Address line</label>
-							<input type="text" class="form-control" name="address1" id="address">
+							<input type="text" class="form-control" name="address1" id="address" required>
 						</span>
 						<span class="input-field">
 							<label for="city">City</label>
-							<input type="text" class="form-control" name="city" id="city">
+							<input type="text" class="form-control" name="city" id="city" required>
 						</span>
 						<span class="input-field">
 							<label for="state">State</label>
-							<input type="text" class="form-control" name="state" id="state">
+							<input type="text" class="form-control" name="state" id="state" required>
 						</span>
 						<span class="input-field">
 							<label for="zc">Zip code</label>
-							<input type="text" class="form-control" name="zc" id="zc">
+							<input type="text" class="form-control" name="zc" id="zc" required>
 						</span>
 					</div>
 					<div class = "form-group">
 						<h5>Primary Contact</h5>
 						<span class="input-field">
 							<label for="first_name">First name</label>
-							<input type="text" class="form-control" name="first_name" id="first_name">
+							<input type="text" class="form-control" name="first_name" id="first_name" required>
 						</span>
 						<span class="input-field">
 							<label for="last_name">Last name</label>
-							<input type="text" class="form-control" name="last_name" id="last_name">
+							<input type="text" class="form-control" name="last_name" id="last_name" required>
 						</span>
 						<span class="input-field">
 							<label for="email">Email</label>
-							<input type="text" class="form-control" name="email" id="email">
+							<input type="text" class="form-control" name="email" id="email" required>
 						</span>
 						<span class="input-field">
 							<label for="phone_number">Phone number</label>
-							<input type="text" class="form-control" name="phone_number" id="phone_number">
+							<input type="text" class="form-control" name="phone_number" id="phone_number" required>
 						</span>
 					</div>
 					<h5>Other Questions</h5>
 					<p>By how many times do exceed normal capacity (2x indicates double normal capacity)?</p>
-					<input type="text" class="form-control" name="q1" placeholder='e.g. 2x' style="margin-bottom: 5px;"> 
+					<input type="text" class="form-control" name="q1" placeholder='e.g. 2x' style="margin-bottom: 5px;" required> 
 					<p>Please estimate the total number of individuals per week. </p>
-					<input type="text" class="form-control" name="q2" placeholder='Estimate individual demand'> 
+					<input type="text" class="form-control" name="q2" placeholder='Estimate individual demand' required> 
 					<br>
 					<table id="extra-table">
 					 	<tbody>

@@ -2,6 +2,7 @@
 
 import sqlite3 as sql
 import pandas as pd
+import stripe
 import os
 from random import randint
 
@@ -18,8 +19,10 @@ from wtforms.validators import InputRequired
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
 app.config['SECRET_KEY'] = os.urandom(32)
-app.config["MONGO_URI"] = "mongodb+srv://wnuelle:QwakkleSmakkle#!#@cluster0-gqwgd.mongodb.net/test?retryWrites=true&w=majority"
+app.config["MONGO_URI"] = "mongodb+srv://wnuelle:QwakkleSmakkle#!#@cluster0-gz6r3.mongodb.net/test?retryWrites=true&w=majority"
 app.config["MONGO_DBNAME"] = "test"
+stripe_sk = "sk_test_291pSiDba23GGIOYuAqH4eg600q77nHQRZ"
+stripe.api_key = stripe_sk
 mongo = PyMongo(app)
 
 class InfoForm(FlaskForm):
@@ -86,13 +89,14 @@ def get_route():
 		route = routes.find_one({'id':request.args.get('id')})
 		print(route)
 		if request.method == "POST":
-			routes.update({'id':request.args.get('id')},{"$set":{'Current Fee':request.form['bid']}})
+			if request.form['bid'] < route['Current Fee']:
+				routes.update({'id':request.args.get('id')},{"$set":{'Current Fee':request.form['bid']}})
 
 		locations = []
 		for i in range(int(route['Route length'])):
 			locations.append((float(route[str(i)]['Lat']),float(route[str(i)]['Long'])))
 
-		return render_template('RouteTemplate2.html',route=route,locations=[locations],form=form)
+		return render_template('RouteTemplate2.html',route=route,locations=[locations],form=form,date=route['Expiration'])
 
 
 @app.route('/courier',methods=['GET','POST'])
@@ -118,11 +122,12 @@ def donate_form():
 		print(input_dictionary)
 		volunteers.insert(input_dictionary)
 
-	return render_template('public.html',form=form)
+	return render_template('public.html',form=form,pub_key="pk_test_DCb7o35M61huNlchdbxiSiIU00UQ8s17Ax")
 
 @app.route('/pay', methods=['POST'])
 def pay():
     
+    print(request.form)
     customer = stripe.Customer.create(email=request.form['stripeEmail'], source=request.form['stripeToken'])
 
     charge = stripe.Charge.create(
@@ -132,7 +137,7 @@ def pay():
         description='The Product'
     )
 
-    return redirect(url_for('thanks'))
+    return redirect(url_for('thanks'),pub_key="pk_test_DCb7o35M61huNlchdbxiSiIU00UQ8s17Ax")
 
 #> python app.py
 if __name__ == "__main__":

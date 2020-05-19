@@ -39,7 +39,7 @@
 			<td><input id="inputStart" class="w3-input" placeholder="Start Location..." style="background-color: #f1f1f1;"></td>
 			<td><input id="inputEnd" class="w3-input" placeholder="End Location..." style="background-color: #f1f1f1;"></td>
 			<td><input id="inputDistance" class="w3-input" placeholder="Distance..." style="background-color: #f1f1f1;"></td>
-			<td><input id="inputStops" class="w3-input" placeholder="# Stops..." style="background-color: #f1f1f1;"></td>
+			<td><input id="inputStops" class="w3-input" placeholder="Expires on..." style="background-color: #f1f1f1;"></td>
 			<td><input id="inputItem" class="w3-input" placeholder="Food Item..." style="background-color: #f1f1f1;"></td>
 			<td><input id="inputQuantity" class="w3-input" placeholder="Quantity..." style="background-color: #f1f1f1;"></td>
 			<td><input id="inputWeight" class="w3-input" placeholder="Total Weight..." style="background-color: #f1f1f1;"></td>
@@ -55,7 +55,7 @@
 			<td>{{ rte['0']['Address'] }}</td>
 			<td>{{ rte[(rte['Route length']|int - 1)|string]['Address'] }}</td>
 			<td>{{ rte['Total distance'] }}</td>
-			<td style="text-align:center;">{{ rte['Route length'] }}</td>
+			<td style="text-align:center;">{{ rte['Expiration'] }}</td>
 			<td>{{ rte['Item'].split(":")[1].capitalize() }}</td>
 			<td>{{ rte['Total quantity'] }}</td> 
 			<td>{{ rte['Total quantity'] }}</td>
@@ -75,7 +75,7 @@
 			document.getElementById("inputStart").value = "";
 			document.getElementById("inputEnd").value = "";
 			document.getElementById("inputDistance").value = "";
-			document.getElementById("inputStops").value = "";
+			document.getElementById("inputExpiration").value = "";
 			document.getElementById("inputItem").value = "";
 			document.getElementById("inputQuantity").value = "";
 			document.getElementById("inputWeight").value = "";
@@ -88,10 +88,15 @@
 			var rows = document.querySelector("#myTable tbody").rows;
 			for (var i = 0; i < rows.length; i++) {
 				var firstCol = rows[i].cells[0].textContent.toUpperCase();
-				console.log(firstCol)
 				var secondCol = rows[i].cells[1].textContent.toUpperCase();
 				var thirdCol = rows[i].cells[2].textContent.toUpperCase();
-				if ((firstCol.indexOf(filter) > -1 && index == 0) || (secondCol.indexOf(filter) > -1 && index == 1) || (thirdCol.indexOf(filter) > -1 && index == 2)) {
+				var fourCol = rows[i].cells[3].textContent.toUpperCase();
+				var fiveCol = rows[i].cells[4].textContent.toUpperCase();
+				var sixCol = rows[i].cells[5].textContent.toUpperCase();
+				var sevenCol = rows[i].cells[6].textContent.toUpperCase();
+				var eightCol = rows[i].cells[7].textContent.toUpperCase();
+
+				if ((firstCol.indexOf(filter) > -1 && index == 0) || (secondCol.indexOf(filter) > -1 && index == 1) || (thirdCol.indexOf(filter) > -1 && index == 2) || (fourCol.indexOf(filter) > -1 && index == 3) || (fiveCol.indexOf(filter) > -1 && index == 4) || (sixCol.indexOf(filter) > -1 && index == 5) || (sevenCol.indexOf(filter) > -1 && index == 6) || (eightCol.indexOf(filter) > -1 && index == 7)) {
 				  rows[i].style.display = "";
 			} else {
 				rows[i].style.display = "none";
