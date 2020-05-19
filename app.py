@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import sqlite3 as sql
 import pandas as pd
 import stripe
 import os
