@@ -1,20 +1,22 @@
+/* Site-wide variables to be used for all styling */
 :root {
-  --grid-size: 4px; 
+  --blue: #076bab;
   --body-font: 'Arial';
   --button-font: 'Roboto','sans-serif';
   --button-font-size: 16px;
+  --grid-size: 4px; 
+  --nav-font-size: 20px;
+  --red: #dc3545;
 }
+
 /* Header/footer styling */
 #flag {
-  position: absolute;
+  position: fixed;
   bottom: 0%;
   left: 0%;
   padding: 0 0 calc(var(--grid-size)*5) calc(var(--grid-size)*5);
 }
 
-#checkout {
-  background-color: 
-}
 #menuToggle
 {
   display: block;
@@ -125,20 +127,61 @@
   transform: none;
 }
 
-
-.form-control {
-  width:calc(var(--grid-size)*50);
-  height:calc(var(--grid-size)*5);
+/* Generic content styling (alphabetized) */
+.add-row {
+  text-align: right;
+  font-weight: bold;
+  padding-right: calc(var(--grid-size) * 2);
 }
 
-#submission {
-  padding-left: calc(var(--grid-size)*20);
+.add-row-button {
+  color: white;
+  background-color: var(--blue);
+  border-color: var(--blue);
+  border-radius: var(--grid-size);
+  line-height: 1.0;
+  cursor: pointer;
+  width: calc(var(--grid-size) * 7);
+}
+
+.button1 {
+  padding: calc(var(--grid-size) * 1.5);
+  border: calc(var(--grid-size) / 2) solid black;
+  margin: 0 calc(var(--grid-size) / 2);
+  border-radius: calc(var(--grid-size));
+  width: calc(var(--grid-size) * 100);
+  text-decoration:none;
+  font-size: var(--button-font-size);
+  font-family:var(--button-font);
+  font-weight:300;
+  color: black;
+  text-align:center;
+}
+.button1:hover {
+  cursor: pointer;
+  color:white;
+  background-color: var(--blue);
+}
+@media all and (max-width:calc(var(--grid-size) * 120)){
+  a.button1 {
+    display:block;
+    margin:calc(var(--grid-size) / 2) auto;
+  }
+}
+
+.column {
+  width:49.5%;
 }
 
 .form {
   width: calc(var(--grid-size)*50);
   height: calc(var(--grid-size)*5);
   padding: var(--grid-size);
+}
+
+.form-control {
+  width:calc(var(--grid-size)*50);
+  height:calc(var(--grid-size)*5);
 }
 
 .input-field {
@@ -148,121 +191,27 @@
 
 .input-field input {
   width: 60%;
+  margin-top: var(--grid-size);
 }
 
 .input-field label {
   width: calc(var(--grid-size)*50);
 }
 
-#flag {
-  position: absolute;
-  bottom: 0%;
-  left: 0%;
-  padding: 0 0 calc(var(--grid-size)*5) calc(var(--grid-size)*5);
-}
-
-#abouttext {
-  font-family:var(--body-font);
-}
-
-p.justify {
-  text-justify: inter-word;
-  font-family:var(--body-font);
-  line-height: 175%;
-  font-size:18px;
+.remove-row-button {
+  color: white;
+  background-color: var(--red);
+  border-color: var(--red);
+  border-radius: var(--grid-size);
+  line-height: 1.0;
+  cursor: pointer;
+  width: calc(var(--grid-size) * 7);
 }
 
 .row {
-  display: flex;*/
-  flex-direction: row;
-  justify-content: space-around;
-}
-
-.column {
-  width:49.5%;
-}
-
-div.center {
-  margin: auto;
-  width: 70%;
-  padding: calc(var(--grid-size)*2);
-  position: absolute;
-  top: 50%;
-  left:15%;
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
-}
-
-div.button-group {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-}
-
-a.button1 {
-  padding: calc(var(--grid-size) * 1.5);
-  border: calc(var(--grid-size) / 2) solid black;
-  margin: 0 calc(var(--grid-size) / 2);
-  border-radius: calc(var(--grid-size));
-  width: calc(var(--grid-size) * 100);
-  text-decoration:none;
-  font-size: var(--button-font-size);
-  font-family:var(--button-font);
-  font-weight:300;
-  color: black;
-  text-align:center;
-  transition: all 0.2s;
-}
-a.button1:hover {
-  color:white;
-  background-color: #076bab;
-}
-button.button1 {
-  padding: calc(var(--grid-size) * 1.5);
-  border: calc(var(--grid-size) / 2) solid black;
-  margin: 0 calc(var(--grid-size) / 2);
-  border-radius: calc(var(--grid-size));
-  width: calc(var(--grid-size) * 100);
-  text-decoration:none;
-  font-size: var(--button-font-size);
-  font-family:var(--button-font);
-  font-weight:300;
-  color: black;
-  text-align:center;
-}
-button.button1:hover {
-  color:white;
-  background-color: #076bab;
-}
-@media all and (max-width:calc(var(--grid-size) * 120)){
-  a.button1 {
-    display:block;
-    margin:calc(var(--grid-size) / 2) auto;
-  }
-}
-
-/* Dropdown Button */
-.drop {
-  font-size: var(--button-font-size);
-  font-family: var(--button-font);
-  padding: 0 0 calc(var(--grid-size)*5) calc(var(--grid-size)*5);
-}
-
-/* The container <div> - needed to position the dropdown content */
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-/* Dropdown Content (Hidden by Default) */
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f1f1f1;
-  outline: 3px black;
-  width:500px;
-  z-index: 1;
-  padding: 0 calc(var(--grid-size)*5);
 }
 
 #tbl {
@@ -302,8 +251,6 @@ button.button1:hover {
   background-color: #f1f1f1;
 }
 
-
-
 .grid-container {
   display: grid;
   grid-template-columns: auto auto;
@@ -315,6 +262,7 @@ button.button1:hover {
   font-size: 30px;
   text-align: center;
 }
+
 /* Style the buttons that are used to open and close the accordion panel */
 .accordion {
   background-color: #eee;
@@ -331,6 +279,13 @@ button.button1:hover {
   font-size:16px;
 }
 
+p.justify {
+  text-justify: inter-word;
+  font-family:var(--body-font);
+  line-height: 175%;
+  font-size:18px;
+}
+
 /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
 .active, .accordion:hover {
   background-color: #ccc;
@@ -344,11 +299,35 @@ button.button1:hover {
   display: none;
   overflow: hidden;
 }
+
 /* Change color of dropdown links on hover */
 .dropdown-content a:hover {background-color: #ddd;}
 
-/* Show the dropdown menu on hover */
-.dropdown:hover .dropdown-content {display: block;}
+#submission {
+  padding-left: calc(var(--grid-size)*20);
+}
 
-/* Change the background color of the dropdown button when the dropdown content is shown */
-.dropdown:hover .dropbtn {background-color: #3e8e41;}
+#submit {
+  width: 100%;
+}
+
+/* Specific styling */
+.button-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.center {
+  margin: auto;
+  width: 70%;
+}
+
+.headline {
+  text-align: center;
+}
+
+.headline h1 {
+  font-family: var(--body-font);
+  font-weight: 400;
+}

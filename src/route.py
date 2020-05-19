@@ -2,6 +2,7 @@ import random
 import pymongo
 import string
 import datetime
+import os
 
 class Route:
 	def __init__(self,path=[],distance=0,exhausted=0,item=''):
@@ -25,7 +26,7 @@ class Route:
 	###  					                ###
 	###########################################
 	def ConstructFields(self):
-		client = pymongo.MongoClient("mongodb+srv://wnuelle:QwakkleSmakkle#!#@cluster0-gz6r3.mongodb.net/test?retryWrites=true&w=majority")
+		client = pymongo.MongoClient(os.environ.get('MONGO_URI'))
 		ID_list = client.test.routes.distinct('id')
 		while True:
 			key = ''.join([random.choice(string.ascii_letters + string.digits) for n in range(32)])
@@ -62,7 +63,7 @@ class Route:
 		client.test.routes.insert(input_dictionary)
 
 	def SupplyBreakdown(FB,FP,value):
-		
+
 		if sum(distributed_food) == self.exhausted:
 			return []
 	#def GetVolunteers():

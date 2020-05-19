@@ -19,7 +19,7 @@ from wtforms.validators import InputRequired
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
 app.config['SECRET_KEY'] = os.urandom(32)
-app.config["MONGO_URI"] = "mongodb+srv://wnuelle:QwakkleSmakkle#!#@cluster0-gz6r3.mongodb.net/test?retryWrites=true&w=majority"
+app.config["MONGO_URI"] = os.environ.get('MONGO_URI')
 app.config["MONGO_DBNAME"] = "test"
 stripe_sk = "sk_test_291pSiDba23GGIOYuAqH4eg600q77nHQRZ"
 stripe.api_key = stripe_sk
