@@ -121,7 +121,7 @@ def donate_form():
 		print(input_dictionary)
 		volunteers.insert(input_dictionary)
 
-	return render_template('public.html',form=form,pub_key="pk_test_DCb7o35M61huNlchdbxiSiIU00UQ8s17Ax")
+	return render_template('Public.html',form=form,pub_key="pk_test_DCb7o35M61huNlchdbxiSiIU00UQ8s17Ax")
 
 @app.route('/pay', methods=['POST'])
 def pay():
