@@ -319,8 +319,12 @@ p.justify {
 }
 
 .center {
-  margin: auto;
+  margin: 0 auto;
   width: 70%;
+  position: fixed;
+  top:15%;
+  left:15%;
+  justify-content: center;
 }
 
 .headline {
