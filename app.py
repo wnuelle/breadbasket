@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
-
+import pymongo
 import pandas as pd
 import stripe
 import os
 from random import randint
+import requests
 
 import flask
 from flask import request, jsonify, render_template
@@ -44,6 +45,20 @@ def index():
 @app.route('/fb',methods=['GET','POST'])
 def fb_form():
 
+	def getLatLong(address,city,state,zc):
+		url = f"https://maps.googleapis.com/maps/api/geocode/json?address={address}','{city}','{state}{zc}&key={'AIzaSyBR4VBHFKox9cvzeCdR2gojPGcGD6ij5vE'}"
+		print(os.environ.get('GOOGLEMAPSAPI'))
+		resp = requests.get(url).json()
+		lat = resp['results'][0]['geometry']['location']['lat']
+		lng = resp['results'][0]['geometry']['location']['lng']
+		return lat,lng
+	
+	def getFBID():
+		client = pymongo.MongoClient(os.environ.get('MONGO_URI'))
+		ID_list = client.test.banks.distinct('FBID')
+		ID_list = [int(i) for i in ID_list]
+		return max(ID_list) + 1
+
 	form = InfoForm()
 	banks = mongo.db.banks 
 
@@ -51,18 +66,40 @@ def fb_form():
 		fields = ['first_name','last_name','email','phone_number','fb_name','address','city','state','zc','q1','q2']
 		input_dictionary = {item:request.form[item] for item in fields}
 		c = 1
+
+		lat,lng = getLatLong(request.form['address'],request.form['city'],request.form['state'],request.form['zc'])
+		input_dictionary['Lat'] = lat
+		input_dictionary['Long'] = lng
+		FBID = getFBID()
+		input_dictionary['FBID'] = str(FBID)
+
 		while True:
 			try:
 				input_dictionary[str(request.form[f'food_type{c}'])+':'+request.form[f'food_item{c}']] = float(request.form[f'quantity{c}'])
 			except:
 				break
 			c+=1
+		print(input_dictionary)
 		banks.insert(input_dictionary)
 
 	return render_template('FoodBanks.html',form=form)
 
 @app.route('/fp',methods=['GET','POST'])
 def fp_form():
+
+	def getLatLong(address,city,state,zc):
+		url = f"https://maps.googleapis.com/maps/api/geocode/json?address={address}','{city}','{state}{zc}&key={'AIzaSyBR4VBHFKox9cvzeCdR2gojPGcGD6ij5vE'}"
+		print(os.environ.get('GOOGLEMAPSAPI'))
+		resp = requests.get(url).json()
+		lat = resp['results'][0]['geometry']['location']['lat']
+		lng = resp['results'][0]['geometry']['location']['lng']
+		return lat,lng
+	
+	def getFPID():
+		client = pymongo.MongoClient(os.environ.get('MONGO_URI'))
+		ID_list = client.test.banks.distinct('FBID')
+		ID_list = [int(i) for i in ID_list]
+		return max(ID_list) + 1
 
 	form = InfoForm()
 	suppliers = mongo.db.suppliers
@@ -71,6 +108,13 @@ def fp_form():
 		fields = ['first_name','last_name','email','phone_number','fp_name','address','city','state','zc','q1','q2']
 		input_dictionary = {item:request.form[item] for item in fields}
 		c = 1
+
+		lat,lng = getLatLong(request.form['address'],request.form['city'],request.form['state'],request.form['zc'])
+		input_dictionary['Lat'] = lat
+		input_dictionary['Long'] = lng
+		FPID = getFPID()
+		input_dictionary['FPID'] = str(FPID)
+
 		while True:
 			try:
 				input_dictionary[str(request.form[f'food_type{c}'])+':'+request.form[f'food_item{c}']] = float(request.form[f'quantity{c}'])
