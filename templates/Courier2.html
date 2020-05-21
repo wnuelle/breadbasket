@@ -6,12 +6,13 @@
 
   <title>Breadbasket</title>
   <meta name="description" content="Connect food banks to food suppliers.">
-  
+
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"">
   <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
   <link href="{{ url_for('static', filename='css/narrow-jumbotron.css') }}" rel="stylesheet">
   <link href="https://www.w3schools.com/w3css/4/w3.css" rel="stylesheet" />
-  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 	<nav role="navigation">
 		<div id="menuToggle">
 			<input type="checkbox" />
@@ -29,10 +30,15 @@
 	</nav>
 </head>
 <body>
-	<h3 style="margin-left:20px;margin-top:50px;">Available routes</h3>
+	<h3 style="margin-left:20px;margin-top:40px;">Available routes</h3>
 	<div id="map" style="height:600px; background:gray; margin:1%"> 
 	</div>
-	<span style = "float:right;padding-right:15px;margin-bottom:10px"> <label id="demo" style="height:10px"></label> <input type="range" min="1" max="100" value="50" class="slider" style = "width:200px" id="myRange"> <input type="text" placeholder="From Zip code...">
+	<span style = "float:right;padding-right:15px;margin-bottom:10px"> 
+		<label id="demo" style="height:10px"></label> 
+		<input type="range" min="1" max="100" value="50" class="slider" style = "width:200px;margin-left: 10px;" id="myRange"> 
+		<input type="text" placeholder="From Zip code..." style="margin-left: 10px;" id="zip_input" required>
+		<button class="button1" id="filter" style="width:100px;margin-left:10px">Filter table</button>
+		<button class="button1" id="reset" style="width:100px;margin-left:10px">Reset</button>
 	</span>
 	<div id="tbl" style="margin:15px">
 	<table id="myTable" class="w3-table w3-striped w3-hoverable">
@@ -70,7 +76,6 @@
 		</tbody>
 	</table>
 	<script type="text/javascript">
-		
 		var locations = JSON.parse("{{ locations | tojson | safe}}");
 		console.log(locations)
 
@@ -148,7 +153,7 @@
 				console.log(finish)
 				console.log(waypoints)
 				calculateAndDisplayRoute(directionsService, directionsRenderer, start, waypoints, finish);
-		  	}
+			}
 
 		}
 
@@ -176,6 +181,41 @@
 		slider.oninput = function() {
 		  output.innerHTML = this.value + " miles";
 		}
+		</script>
+		<script type="text/javascript">
+			var filter = document.getElementById("filter")
+			var distance;
+			filter.onclick = function() {
+				var maxDistance = document.getElementById("myRange")
+				var targetZip = document.getElementById("zip_input")
+				var rows = document.querySelector("#myTable tbody").rows;
+				for (var i = 0; i < rows.length; i++) {
+					var start = rows[i].cells[0].innerHTML;
+					var startzip = start.substr(start.length - 5)
+					var end = rows[i].cells[1].innerHTML;
+					var endzip = end.substr(end.length - 5)
+					console.log("Start:"+startzip)
+					console.log("Target value:" + targetZip.value)
+
+					/*"https://cors-anywhere.herokuapp.com/https://www.zipcodeapi.com/rest/HbNWjWF0ZjkCbnkX1f1b3OYQpkWIbVpmfnzxBFXTnJmpyLlei5eV7oekXjLuWfN3/distance.json/"+startzip+"/"+targetZip.value+"/mile"*/
+					$.get("https://cors-anywhere.herokuapp.com/https://www.zipcodeapi.com/rest/HbNWjWF0ZjkCbnkX1f1b3OYQpkWIbVpmfnzxBFXTnJmpyLlei5eV7oekXjLuWfN3/distance.json/60093/60614/mile", function(data, status){
+							distance = JSON.stringify(data['distance']);
+							console.log(distance)
+					});
+					if (true) {
+						rows[i].style.display = "none";
+					} else {
+						rows[i].style.display = "";
+					}
+				}
+			}
+			reset.onclick = function() {
+				var rows = document.querySelector("#myTable tbody").rows;
+				for (var i = 0; i < rows.length; i++) {
+					rows[i].style.display = ""
+				}
+			}
+		</script>
 	</script>
 	<script async defer
 	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD9Cfp8qI9Y4CPy_CfZv1pbZNtjwbSsIwc&callback=initMap">
