@@ -21,7 +21,7 @@ def GetDistanceByAddr(id1,id2,FB,FP):
 		outputFormat = json
 		parameters = origin(s), destination(s), key
 
-		if: first digit of id1 == 2, FP(origin) -> FB (destination)
+		if: origin point is food supplier, FP(origin) -> FB (destination)
 	 	otherwise: FB(origin) - > FP (destination)
 
 	'''
