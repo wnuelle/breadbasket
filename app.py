@@ -38,9 +38,12 @@ class InfoForm(FlaskForm):
 	q1 = StringField('Over capacity',validators=[InputRequired()],render_kw={"placeholder": "Q1","style":"font-size:100%;"})
 	q2 = StringField('Population',validators=[InputRequired()],render_kw={"placeholder": "Q2","style":"font-size:100%;"})
 
+
+
 @app.route('/',methods=['GET','POST'])
 def index():
 	return render_template('Breadbasket.html')
+
 
 @app.route('/fb',methods=['GET','POST'])
 def fb_form():

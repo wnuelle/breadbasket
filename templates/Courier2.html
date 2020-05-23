@@ -198,8 +198,8 @@
 					console.log("Target value:" + targetZip.value)
 
 					/*"https://cors-anywhere.herokuapp.com/https://www.zipcodeapi.com/rest/HbNWjWF0ZjkCbnkX1f1b3OYQpkWIbVpmfnzxBFXTnJmpyLlei5eV7oekXjLuWfN3/distance.json/"+startzip+"/"+targetZip.value+"/mile"*/
-					$.get("https://cors-anywhere.herokuapp.com/https://www.zipcodeapi.com/rest/HbNWjWF0ZjkCbnkX1f1b3OYQpkWIbVpmfnzxBFXTnJmpyLlei5eV7oekXjLuWfN3/distance.json/60093/60614/mile", function(data, status){
-							distance = JSON.stringify(data['distance']);
+					$.get("https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins="+targetZip.value+"&destinations="+startzip+"&key=AIzaSyBR4VBHFKox9cvzeCdR2gojPGcGD6ij5vE", function(data, status){
+							distance = JSON.stringify(data);
 							console.log(distance)
 					});
 					if (true) {
