@@ -21,14 +21,15 @@ def GetDistanceByAddr(id1,id2,FB,FP):
 		outputFormat = json
 		parameters = origin(s), destination(s), key
 
-		if: origin point is food supplier, FP(origin) -> FB (destination)
+		if: id1 is in the FB DB, FP(origin) -> FB (destination)
 	 	otherwise: FB(origin) - > FP (destination)
 
 	'''
 	# PHASE 1: Add a database to store calculated distances to avoid duplicate calculations 
 	# and redundant google api calls
 
-	id_tuple = (id1,id2)
+	# sorted tuple so (id1,id2) == (id2,id1) regardless of order
+	id_tuple = sorted(id1,id2)
 	if(id_tuple not in computed_Distances):
 		if str(id1)[0] == str(2):
 			URL = f"https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins={FP.at[id1,'address']}{FP.at[id1,'city']}{FP.at[id1,'state']}&destinations={FB.at[id2,'address']}{FB.at[id2,'city']}{FB.at[id2,'state']}&key={os.environ.get('GOOGLEMAPSAPI')}"
