@@ -39,7 +39,7 @@ class InfoForm(FlaskForm):
 	q2 = StringField('Population',validators=[InputRequired()],render_kw={"placeholder": "Q2","style":"font-size:100%;"})
 
 
-
+##HOMEPAGE
 @app.route('/',methods=['GET','POST'])
 def index():
 	return render_template('Breadbasket.html')
@@ -66,7 +66,8 @@ def fb_form():
 	banks = mongo.db.banks 
 
 	if request.method == "POST":
-		fields = ['first_name','last_name','email','phone_number','fb_name','address','city','state','zc','q1','q2']
+		print(request.form)
+		fields = ['first_name','last_name','email','phone_number','fb_name','address','city','state','zc']
 		input_dictionary = {item:request.form[item] for item in fields}
 		c = 1
 
@@ -83,7 +84,7 @@ def fb_form():
 				break
 			c+=1
 		print(input_dictionary)
-		banks.insert(input_dictionary)
+		#banks.insert(input_dictionary)
 
 	return render_template('FoodBanks.html',form=form)
 
@@ -108,7 +109,8 @@ def fp_form():
 	suppliers = mongo.db.suppliers
 
 	if request.method == "POST":
-		fields = ['first_name','last_name','email','phone_number','fp_name','address','city','state','zc','q1','q2']
+		print(request.form)
+		fields = ['first_name','last_name','email','phone_number','fp_name','address','city','state','zc']
 		input_dictionary = {item:request.form[item] for item in fields}
 		c = 1
 
@@ -124,7 +126,7 @@ def fp_form():
 			except:
 				break
 			c+=1
-		suppliers.insert(input_dictionary)
+		#suppliers.insert(input_dictionary)
 
 	return render_template('FoodProcessors.html',form=form)
 

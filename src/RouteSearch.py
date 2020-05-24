@@ -15,14 +15,15 @@ FOOD = ['starch:pasta','starch:bread','grain:rice','fruit:tomatoes']
 computed_Distances = {}
 
 def GetDistanceByAddr(id1,id2,FB,FP):
+
 	'''
 		Uses Google Distance Matrix API
 		https://maps.googleapis.com/maps/api/distancematrix/outputFormat?parameters...
 		outputFormat = json
 		parameters = origin(s), destination(s), key
 
-		if: id1 is in the FB DB, FP(origin) -> FB (destination)
-	 	otherwise: FB(origin) - > FP (destination)
+		if: id1 is in the FP DB, FP(origin) -> FB (destination)
+	 	otherwise: FB(origin) - > FB (destination)
 
 	'''
 	# PHASE 1: Add a database to store calculated distances to avoid duplicate calculations 
