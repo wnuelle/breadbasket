@@ -40,7 +40,7 @@
 			            <div class="card mx-auto border20" style="margin-left:5%; width: 85%;border-color: #000000;">
 			            	<h2 style="margin-left: 20px;">Information<span style="float:right; margin-right:20px;font-size:16px;margin-top: 10px;color:#FFFFFF"> Instructions </span></h2>
 							<p style="margin-left: 20px;margin-right: 20px">Please provide your contact information. When our algorithms construct a route that delivers to your location, we will reach you by email.</p>
-			                <form method=POST action="{{ url_for('fb_form')}}" method="POST" style="margin-left:20px;margin-right:20px; margin-bottom:20px;text-align: left;">
+			                <form method=POST action="{{ url_for('fp_form')}}" method="POST" style="margin-left:20px;margin-right:20px; margin-bottom:20px;text-align: left;">
 			                	<h5>Location</h5>
 			                   	<div class="form-group">
 			                        <label for="fb_name" class="font-weight text-muted" style="font-size:12px">Food Processor Name</label>
@@ -169,7 +169,12 @@
 									</tr>
 									<tr>
 										<td>
-											<input type="text" class="form-control" name="food_type1" placeholder='starch'> 
+											<select name="food_type1" id="state" style="width:100%;height:35px" class="ui dropdown">
+												<option name= "state" value="">Type</option>
+												<option name= "state" value="AB">Starch</option>
+												<option name= "state" value="AK">Fruits</option>
+												<option name= "state" value="AK">Vegetables</option>
+											</select>
 										</td>
 										<td>
 											<input type="text" class="form-control" name="food_item1" placeholder='pasta'> 
@@ -180,7 +185,12 @@
 									</tr>
 									<tr>
 										<td>
-											<input type="text" class="form-control" name="food_type2"> 
+											<select name="food_type2" id="state" style="width:100%;height:35px" class="ui dropdown">
+												<option name= "state" value="">Type</option>
+												<option name= "state" value="AB">Starch</option>
+												<option name= "state" value="AK">Fruits</option>
+												<option name= "state" value="AK">Vegetables</option>
+											</select>
 										</td>
 										<td>
 											<input type="text" class="form-control" name="food_item2"> 
@@ -194,7 +204,12 @@
 									</tr>
 									<tr>
 										<td>
-											<input type="text" class="form-control" name="food_type3"> 
+											<select name="food_type3" id="state" style="width:100%;height:35px" class="ui dropdown">
+												<option name= "state" value="">Type</option>
+												<option name= "state" value="AB">Starch</option>
+												<option name= "state" value="AK">Fruits</option>
+												<option name= "state" value="AK">Vegetables</option>
+											</select>
 										</td>
 										<td>
 											<input type="text" class="form-control" name="food_item3"> 
@@ -208,7 +223,12 @@
 									</tr>
 									<tr>
 										<td>
-											<input type="text" class="form-control" name="food_type4"> 
+											<select name="food_type4" id="state" style="width:100%;height:35px" class="ui dropdown">
+												<option name= "state" value="">Type</option>
+												<option name= "state" value="AB">Starch</option>
+												<option name= "state" value="AK">Fruits</option>
+												<option name= "state" value="AK">Vegetables</option>
+											</select>
 										</td>
 										<td>
 											<input type="text" class="form-control" name="food_item4"> 
