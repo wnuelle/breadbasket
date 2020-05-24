@@ -126,6 +126,7 @@ def fp_form():
 			except:
 				break
 			c+=1
+		print(input_dictionary)
 		#suppliers.insert(input_dictionary)
 
 	return render_template('FoodProcessors.html',form=form)
