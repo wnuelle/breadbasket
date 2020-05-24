@@ -35,7 +35,7 @@
 	</div>
 	<span style = "float:right;padding-right:15px;margin-bottom:10px"> 
 		<label id="demo" style="height:10px"></label> 
-		<input type="range" min="1" max="100" value="50" class="slider" style = "width:200px;margin-left: 10px;" id="myRange"> 
+		<input type="range" min="10" max="500" value="50" class="slider" style = "width:200px;margin-left: 10px;" id="myRange"> 
 		<input type="text" placeholder="From Zip code..." style="margin-left: 10px;" id="zip_input" required>
 		<button class="button1" id="filter" style="width:100px;margin-left:10px">Filter table</button>
 		<button class="button1" id="reset" style="width:100px;margin-left:10px">Reset</button>
@@ -185,28 +185,33 @@
 		<script type="text/javascript">
 			var filter = document.getElementById("filter")
 			var distance;
+
+			function exposeRow(i,targetZip,maxDistance) {
+				var rows = document.querySelector("#myTable tbody").rows;
+				var start = rows[i].cells[0].innerHTML;
+				var startzip = start.substr(start.length - 5);
+				var end = rows[i].cells[1].innerHTML;
+				var endzip = end.substr(end.length - 5);
+				$.get("https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins="+targetZip.value+"&destinations="+startzip+"&key=AIzaSyBR4VBHFKox9cvzeCdR2gojPGcGD6ij5vE",function(data, status){
+						distance = parseFloat(JSON.stringify(data['rows'][0]['elements'][0]['distance']['value']))/1609.;
+						console.log(distance)
+						console.log(rows)
+						console.log("i:"+i)
+						if (distance > maxDistance) {
+							rows[i].style.display = "none";
+						} else {
+							rows[i].style.display = "";
+						}
+				});
+
+			};
+
 			filter.onclick = function() {
-				var maxDistance = document.getElementById("myRange")
+				var maxDistance = document.getElementById("myRange").value
 				var targetZip = document.getElementById("zip_input")
 				var rows = document.querySelector("#myTable tbody").rows;
 				for (var i = 0; i < rows.length; i++) {
-					var start = rows[i].cells[0].innerHTML;
-					var startzip = start.substr(start.length - 5)
-					var end = rows[i].cells[1].innerHTML;
-					var endzip = end.substr(end.length - 5)
-					console.log("Start:"+startzip)
-					console.log("Target value:" + targetZip.value)
-
-					/*"https://cors-anywhere.herokuapp.com/https://www.zipcodeapi.com/rest/HbNWjWF0ZjkCbnkX1f1b3OYQpkWIbVpmfnzxBFXTnJmpyLlei5eV7oekXjLuWfN3/distance.json/"+startzip+"/"+targetZip.value+"/mile"*/
-					$.get("https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins="+targetZip.value+"&destinations="+startzip+"&key=AIzaSyBR4VBHFKox9cvzeCdR2gojPGcGD6ij5vE", function(data, status){
-							distance = JSON.stringify(data);
-							console.log(distance)
-					});
-					if (true) {
-						rows[i].style.display = "none";
-					} else {
-						rows[i].style.display = "";
-					}
+					exposeRow(i,targetZip,maxDistance)
 				}
 			}
 			reset.onclick = function() {
