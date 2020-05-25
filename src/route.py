@@ -45,19 +45,19 @@ class Route:
 			res = {**dict1, **dict2} 
 			return res
 
-		def get_info(ID,FB,FP):
+		def get_info(ID,FB,FP,delivery_amounts):
 			if str(ID)[0] == str(1):
-				return {'Food bank name':FB.at[ID,'fp_name'],'Safe Address':str(FB.at[ID,'city']) + ', ' + str(FB.at[ID,'state']) + ', ' + str(FB.at[ID,'zc']),'Address': str(FB.at[ID,'address']) + ' ' + str(FB.at[ID,'city'] + ' ' + str(FB.at[ID,'state'] + ' ' + str(FB.at[ID,'zc']))),'Type':self.item,'Quantity':FB.at[ID,self.item],'Contact name':str(FB.at[ID,'first_name'])+ ' ' +str(FB.at[ID,'last_name']),'Email':FB.at[ID,'email'],'Phone':FB.at[ID,'phone_number']}
+				return {'Food bank name':FB.at[ID,'fp_name'],'Safe Address':str(FB.at[ID,'city']) + ', ' + str(FB.at[ID,'state']) + ', ' + str(FB.at[ID,'zc']),'Address': str(FB.at[ID,'address']) + ' ' + str(FB.at[ID,'city'] + ' ' + str(FB.at[ID,'state'] + ' ' + str(FB.at[ID,'zc']))),'Type':self.item,'Quantity':delivery_amounts[ID],'Contact name':str(FB.at[ID,'first_name'])+ ' ' +str(FB.at[ID,'last_name']),'Email':FB.at[ID,'email'],'Phone':FB.at[ID,'phone_number']}
 			else:
 				return {'Supplier name':FP.at[ID,'fp_name'],'Safe Address':str(FP.at[ID,'city']) + ', ' + str(FP.at[ID,'state']) + ', ' + str(FP.at[ID,'zc']),'Address': str(FP.at[ID,'address']) + ' ' + str(FP.at[ID,'city'] + ' ' + str(FP.at[ID,'state'] + ' ' + str(FP.at[ID,'zc']))),'Type':self.item,'Quantity':FP.at[ID,self.item],'Contact name':str(FP.at[ID,'first_name'])+ ' ' +str(FP.at[ID,'last_name']),'Email':FP.at[ID,'email'],'Phone':FP.at[ID,'phone_number']}
 		
 		print('Constructing details...')
 		### (!!!) NEED TO FIX QUANTITIES SENT TO EACH FOOD BANK (ADJUST to maximum of food supply (see SupplyBreakdown function))
 		run = self.ConstructFields()
-		supply = self.SupplyBreakdown(FB,FP,value)
+		delivery_amounts = self.SupplyBreakdown(FB,FP,value)
 
 		meta = {'id':self.routeID,'Item':self.item,'Expiration':self.Expiration,'Total quantity':self.exhausted,'Current Fee':self.currentFee,'Route length':self.length,'Total distance':str(self.distance) + ' miles','Courier selection':self.biddingProcess}
-		path_info = {str(i):get_info(self.path[i],FB,FP) for i in range(len(self.path))}
+		path_info = {str(i):get_info(self.path[i],FB,FP,delivery_amounts) for i in range(len(self.path))}
 		input_dictionary = Merge(meta,path_info)
 
 		#client.test.routes.insert(input_dictionary)
@@ -68,7 +68,7 @@ class Route:
 		print(self.item)
 
 		receipts = [id_num for id_num in self.path if id_num[:1] != str(2)]
-		delivery_amounts = {bank:FB.at[bank,self.item]*float(value)/float(self.exhausted) for bank in receipts}
+		delivery_amounts = {bank:round(FB.at[bank,self.item]*float(value)/float(self.exhausted),1) for bank in receipts}
 		return delivery_amounts
 	#def GetVolunteers():
 

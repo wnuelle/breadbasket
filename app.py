@@ -138,7 +138,7 @@ def get_route():
 		route = routes.find_one({'id':request.args.get('id')})
 		print(route)
 		if request.method == "POST":
-			if request.form['bid'] < route['Current Fee']:
+			if float(request.form['bid']) < route['Current Fee']:
 				routes.update({'id':request.args.get('id')},{"$set":{'Current Fee':request.form['bid']}})
 
 		locations = []

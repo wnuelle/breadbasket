@@ -29,21 +29,25 @@
 		<div class="column" style="width: 48%; float:left; margin:1%"> 
 			<h2 style="margin-left:60px;">Route</h2>
 			<h5 style="margin-left:60px;">Information</h5>
-			<p style ="margin-left:70px;"><b>Date:</b> 5/10/2020 <span style="float:right;margin-right: 100px;"><b>Delivery item:</b> {{ item }}</span></p>
-			<p style ="margin-left:70px;"><b>Route manager:</b> Shelly <span style="float:right;margin-right: 100px;"><b>Contact information:</b></span></p>
+			<p style ="margin-left:70px;"><b>Date:</b> 5/10/2020 <span style="float:right;margin-right: 50px;"><b>Delivery item:</b> {{ item }}</span></p>
+			<p style ="margin-left:70px;"><b>Route manager:</b> Shelly <span style="float:right;margin-right: 50px;"><b>Contact information:</b> (312)-852-2828</span></p>
 			<h5 style="margin-left:60px;">Itinerary</h5>
 			<br>
-			<button class="accordion" style ="margin-left:60px;width:87%">Pick up: {{route['0']['Supplier name']}}<span style="float:right;"><b>9:30 AM</b>
+			<button class="accordion" style ="margin-left:60px;width:87%">Pick up: {{route['0']['Supplier name']}}<span style="float:right;"><b>{{route['0']['ETA']}}</b>
 			</span>
 			</button>
 			<div class="panel">
 			  <p style ="margin-left:60px;">Address: {{route['0']['Address']}}</p>
+			  <p style ="margin-left:60px;">Pick up quantity: {{route['0']['Quantity']}}</p>
+			  <p style ="margin-left:60px;">Contact name: {{route['0']['Contact name']}}</p>
 			</div>
 
 			{% for i in range(route['Route length']|int-1) %}
-			<button class="accordion" style ="margin-left:60px;width:87%">Drop off: {{ route[(i+1)|string]['Food bank name'] }}</button>
+			<button class="accordion" style ="margin-left:60px;width:87%">Drop off: {{ route[(i+1)|string]['Food bank name'] }}<span style="float:right;"><b>{{route[(i+1)|string]['ETA']}}</b> </span></button>
 			<div class="panel">
+			  <p style ="margin-left:70px;">Delivery quantity: {{route[(i+1)|string]['Quantity']}}</p>
 			  <p style ="margin-left:70px;">Address: {{route[(i+1)|string]['Address']}}</p>
+			  <p style ="margin-left:70px;">Contact name: {{route[(i+1)|string]['Contact name']}}</p>
 			</div>
 			{% endfor %}
 
@@ -63,6 +67,15 @@
 		<div class="column" id="map" style="width: 48%; float:right; position:fixed; height:900px; background:gray; margin:1%"> 
 		</div>
 	</div>
+	<div id="myModal" class="modal">
+
+  	<!-- Modal content -->
+  	<div class="modal-content">
+    	<span class="close">&times;</span>
+    	<p>Some text in the Modal..</p>
+  	</div>
+
+</div>
 <script>
 
 	var date = "{{ date | safe}}"
