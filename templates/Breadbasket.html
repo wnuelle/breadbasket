@@ -8,6 +8,12 @@
   <meta name="description" content="Connect food banks to food suppliers.">
 
   <link rel= "stylesheet" type="text/css" href= "{{ url_for('static', filename='css/style.css') }}">
+  <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/narrow-jumbotron.css') }}" rel="stylesheet">
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" defer="">
+  <link href="https://fonts.googleapis.com/css?family=Lato:300,600" rel="stylesheet" defer="">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/3/w3.css" defer="">
+
   <nav role="navigation">
 	<div id="menuToggle">
 		<input type="checkbox" />
@@ -37,15 +43,16 @@
 				<img src="static/img/demand2.jpeg" alt="Food bank lines in San Antonio, Texas" style="width:100%">
 			</div>
 		</div>
+		<br>
 		<div class="button-group">
-			<a href="{{ url_for('fb_form') }}" class="button1">Food Banks<br/><i>Signal need</i></a>
-			<a href="{{ url_for('fp_form') }}" class="button1">Food Processors<br/><i>Signal oversupply</i></a>
-			<a href="{{ url_for('courier_form') }}" class="button1">Couriers<br><i>Bridge-the-gap</i></a>
-			<a href="{{ url_for('donate_form') }}" class="button1">Public <br><i>Donate and Participate!</i></a>
+			<a href="{{ url_for('fb_form') }}" class="button1" style="font-size:18px">Food Banks<br/><i>Signal need</i></a>
+			<a href="{{ url_for('fp_form') }}" class="button1" style="font-size:18px">Food Processors<br/><i>Signal oversupply</i></a>
+			<a href="{{ url_for('courier_form') }}" class="button1" style="font-size:18px">Couriers<br><i>Bridge-the-gap</i></a>
+			<a href="{{ url_for('donate_form') }}" class="button1" style="font-size:18px">Public <br><i>Donate and Participate!</i></a>
 		</div>
 		<br>
 		<div class="headline">
-			<h1>We are Breadbasket. We connect <span style="color:#96b56d">food suppliers</span> with surplus to <span style="color:#96b56d">food banks </span> seeing unprecendented demand. Join the fight to feed America by signing up!</h1>
+			<h1>We are Breadbasket. We connect <span style="color:#96b56d">food suppliers</span> with surplus to <span style="color:#96b56d">food banks </span> seeing unprecendented demand. Join the fight to feed America!</h1>
 		</div>
 	</div>
 	<div id="flag">
