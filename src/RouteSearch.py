@@ -30,21 +30,22 @@ def GetDistanceByAddr(id1,id2,FB,FP):
 	# and redundant google api calls
 
 	# sorted tuple so (id1,id2) == (id2,id1) regardless of order
-	id_tuple = sorted(id1,id2)
+	id_tuple = tuple(sorted((id1,id2)))
+	print('Computed distances:',computed_Distances)
 	if(id_tuple not in computed_Distances):
 		if str(id1)[0] == str(2):
-			URL = f"https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins={FP.at[id1,'address']}{FP.at[id1,'city']}{FP.at[id1,'state']}&destinations={FB.at[id2,'address']}{FB.at[id2,'city']}{FB.at[id2,'state']}&key={os.environ.get('GOOGLEMAPSAPI')}"
+			URL = f"https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins={FP.at[id1,'address']}{FP.at[id1,'city']}{FP.at[id1,'state']}&destinations={FB.at[id2,'address']}{FB.at[id2,'city']}{FB.at[id2,'state']}&key=AIzaSyBR4VBHFKox9cvzeCdR2gojPGcGD6ij5vE"
 			# resp = requests.get(URL).json()
 			# return resp['rows'][0]['elements'][0]['distance']['value']
 		else:
 			### Google Maps API
-			URL = f"https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins={FB.at[id1,'address']}{FB.at[id1,'city']}{FB.at[id1,'state']}&destinations={FB.at[id2,'address']}{FB.at[id2,'city']}{FB.at[id2,'state']}&key={os.environ.get('GOOGLEMAPSAPI')}"
+			URL = f"https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins={FB.at[id1,'address']}{FB.at[id1,'city']}{FB.at[id1,'state']}&destinations={FB.at[id2,'address']}{FB.at[id2,'city']}{FB.at[id2,'state']}&key=AIzaSyBR4VBHFKox9cvzeCdR2gojPGcGD6ij5vE"
 			# resp = requests.get(URL).json()
 			# return resp['rows'][0]['elements'][0]['distance']['value']
 
 		resp = requests.get(URL).json()
 		result = resp['rows'][0]['elements'][0]['distance']['value']
-		computed_Distances.update(id_tuple,result)
+		computed_Distances[id_tuple] = result
 		return result
 	else:
 		return computed_Distances.get(id_tuple)
@@ -76,8 +77,7 @@ def Search(client,value,FB,FP,source,item):
 		if rte.exhausted >= value: ##Eventually condition check
 			## Call route address book etc...
 			print('Found!')
-			rte.ConstructDetails(client,FB,FP)
-			print(rte.path)
+			rte.ConstructDetails(client,FB,FP,value)
 			return rte
 		else:
 			neighbors = list(set(eligible_banks.index) - set(rte.path))
@@ -130,13 +130,14 @@ def PATHFINDER():
 	FB.set_index('FBID',inplace=True)
 	print(FB)
 
-	for index,row in FP.iterrows(): ## iterrows is usually a bad solution, but I couldn't think of a way to vectorize and we're not performance constrained
+	for index,row in FP[:1].iterrows(): ## iterrows is usually a bad solution, but I couldn't think of a way to vectorize and we're not performance constrained
 		if len(row['Supply'])>0:
 			for item in row['Supply']: ## This looks like it adds a bunch of time complexity, but it will typically be either 1 or 2 values
 				value = FP.at[index,item]
 				result = Search(client,value,FB,FP,index,item)
 				if result != None:
-					print(result.path)
+					#print(result.path)
+					print()
 
 				### GOAL: zero the Supply of items out
 		else:

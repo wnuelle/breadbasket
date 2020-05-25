@@ -145,7 +145,7 @@ def get_route():
 		for i in range(int(route['Route length'])):
 			locations.append((float(route[str(i)]['Lat']),float(route[str(i)]['Long'])))
 
-		return render_template('Routes.html',route=route,locations=[locations],form=form,date=route['Expiration'])
+		return render_template('Routes.html',route=route,locations=[locations],form=form,date=route['Expiration'],item=route['Item'].split(':')[1].capitalize())
 
 
 @app.route('/courier',methods=['GET','POST'])
