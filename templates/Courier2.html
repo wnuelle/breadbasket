@@ -122,57 +122,74 @@
 		// Initialize and add the map
 		function initMap() {
 			var directionsService = new google.maps.DirectionsService();
-			var directionsRenderer = new google.maps.DirectionsRenderer();
+			// var directionsRenderer = new google.maps.DirectionsRenderer();
 		// The location of Uluru
 
 		// The map, centered at Uluru
 			var map = new google.maps.Map(document.getElementById('map'), {zoom: 2, center: start});
 
-			directionsRenderer.setMap(map);
-
+			// directionsRenderer.setMap(map);
+			var starts = []
+			var finishes = []
+			console.log(locations[0][0].toString())
+			console.log(locations[1][0].toString())
 			for (var i = 0; i < locations.length; i++) {
 				var waypoints = []
+				var waypoint;
 				var start;
 				var finish;
-				var waypoint;
 				for (var j = 0; j < locations[i].length; j++) {
 					if (j == 0) {
 						var point = locations[i][j]
+						console.log('start')
 						console.log(point.toString())
 						start = new google.maps.LatLng(point[0],point[1]);
+						starts.push(start)
 					} else if (j== (locations[i].length - 1)) {
 						var point = locations[i][j]
+						console.log('finish')
 						console.log(point.toString())
 						finish = new google.maps.LatLng(point[0],point[1]);
+						finishes.push(finish)
 					} else {
 						waypoint = new google.maps.LatLng(locations[i][j][0],locations[i][j][1]);
 						waypoints.push({'location':waypoint,'stopover':true})
 					}
 				}
-				console.log(start)
-				console.log(finish)
-				console.log(waypoints)
-				calculateAndDisplayRoute(directionsService, directionsRenderer, start, waypoints, finish);
 			}
 
+			calculateAndDisplayRoute(directionsService, map, starts, waypoints, finishes);
 		}
 
-		function calculateAndDisplayRoute(directionsService, directionsRenderer, start, waypoints, finish) {
+		function calculateAndDisplayRoute(directionsService, map, starts, waypoints, finishes) {
+			for (var i = 0; i < starts.length; i++ ) {
 						directionsService.route(
 								{
-									origin: start,
-									destination: finish,
+									origin: starts[i],
+									destination: finishes[i],
 									waypoints: waypoints,
-									travelMode: 'DRIVING'
+									travelMode: 'DRIVING',
+									// optimizeWaypoints: true,
+									// provideRouteAlternatives: true,
 								},
 								function(response, status) {
 									if (status === 'OK') {
-										directionsRenderer.setDirections(response);
+										// directionsRenderer.setDirections(response);
+										console.log(response)
+										renderDirections(response, map)
 									} else {
 										window.alert('Directions request failed due to ' + status);
 									}
 								});
 					}
+		}
+		
+		function renderDirections(result, map) {
+			var directionsRenderer = new google.maps.DirectionsRenderer(); 
+  			directionsRenderer.setMap(map); 
+    		directionsRenderer.setDirections(result);
+		}
+
 		var slider = document.getElementById("myRange");
 		var output = document.getElementById("demo");
 		output.innerHTML = slider.value + " miles"; // Display the default slider value
